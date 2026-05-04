@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<script>
-var ref=document.referrer;
-var ok=ref.indexOf('landing')!==-1||ref.indexOf('auth')!==-1||ref.indexOf('membership')!==-1||(ref.indexOf('yallsale.com')!==-1&&ref.indexOf('landing')===-1&&ref.indexOf('index')!==-1);
-if(!ok&&ref.indexOf('yallsale.com')===-1&&ref!==''){window.location.replace('landing.html');}
-else if(ref===''){window.location.replace('landing.html');}
-</script>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<script>
+// Redirect to landing if coming directly
+(function(){
+  var key = 'ya_from_landing';
+  var came_from = sessionStorage.getItem(key);
+  if(!came_from){
+    sessionStorage.setItem(key, '1');
+    window.location.replace('landing.html');
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <title>yAllsale — Yard Sale Marketplace</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
@@ -18,7 +23,7 @@ else if(ref===''){window.location.replace('landing.html');}
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--g50:#EAF3DE;--g100:#C0DD97;--g200:#97C459;--g400:#639922;--g600:#3B6D11;--g800:#27500A;--a50:#FAEEDA;--a100:#FAC775;--a200:#EF9F27;--a400:#BA7517;--t50:#E1F5EE;--t200:#5DCAA5;--t600:#0F6E56;--r400:#E24B4A;--bl50:#E6F1FB;--bl600:#185FA5;--gy50:#F1EFE8;--gy100:#D3D1C7;--gy400:#888780;--gy600:#5F5E5A;--white:#fff;--bg:#F5F3EE;--text:#1A1A18;--text2:#5F5E5A;--text3:#888780;--border:#E5E3DC;--border2:#CFCDC5;--shadow:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 12px rgba(0,0,0,0.10)}
 html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;overflow:hidden}
-.app{display:flex;height:100vh;overflow:hidden}
+.app{display:flex;height:100vh;height:100dvh;overflow:hidden;flex-direction:row}
 .sidebar{width:220px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;z-index:20}
 .sidebar-logo{padding:18px 16px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .logo-icon{width:36px;height:36px;background:var(--g800);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -182,7 +187,7 @@ textarea.form-input{resize:vertical;min-height:80px}
 .fav-meta{font-size:11px;color:var(--text3);margin-top:2px}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g800);color:white;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;box-shadow:var(--shadow-md);white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
-.mobile-nav{display:none;border-top:1px solid var(--border);background:var(--white)}
+.mobile-nav{display:none;border-top:1px solid var(--border);background:var(--white);position:relative;z-index:50;flex-shrink:0}
 .mn-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;cursor:pointer;gap:2px}
 .mn-icon{font-size:20px}
 .mn-lbl{font-size:9px;color:var(--text3)}
@@ -193,16 +198,19 @@ textarea.form-input{resize:vertical;min-height:80px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:960px){.sidebar{width:60px}.logo-text,.nav-item span,.u-info,.post-btn span,.lang-bar{display:none}.nav-item{justify-content:center;padding:10px 0}.post-btn{padding:10px;gap:0}.user-strip{justify-content:center;padding:8px 0 0}.sidebar-logo{justify-content:center;padding:14px 0}.sale-panel{width:280px}.detail-side{width:250px}}
 @media(max-width:640px){
-  .sidebar{display:none}
-  .mobile-nav{display:flex;flex-shrink:0}
-  .sale-panel,.detail-side,.chips{display:none}
-  .app{flex-direction:column}
-  .main{flex:1;min-height:0}
-  #map{flex:1;min-height:0}
-  .map-layout{flex:1;overflow:hidden}
-  .topbar{padding:8px 12px}
+  .sidebar{display:none!important}
+  .mobile-nav{display:flex!important;flex-shrink:0;height:60px}
+  .sale-panel,.detail-side,.chips{display:none!important}
+  .app{flex-direction:column!important;height:100vh;height:100dvh}
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+  .screen{flex:1;min-height:0}
+  #map{flex:1!important;min-height:0}
+  .map-layout{flex:1;overflow:hidden;min-height:0}
+  .topbar{padding:8px 12px;flex-shrink:0}
   .search-bar{padding:7px 12px}
   .map-count-badge{font-size:11px;padding:5px 12px;top:10px}
+  .mn-lbl{font-size:10px;color:var(--text3)}
+  .mn-item.active .mn-lbl{color:var(--g600);font-weight:600}
 }
 </style>
 </head>

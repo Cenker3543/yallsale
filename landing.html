@@ -367,5 +367,14 @@ function setLang(lang) {
   document.documentElement.lang = lang;
 }
 </script>
+
+<script>
+// When any link goes to index.html, set the session flag
+document.querySelectorAll('a[href="index.html"]').forEach(function(a){
+  a.addEventListener('click', function(){
+    sessionStorage.setItem('ya_from_landing','1');
+  });
+});
+</script>
 </body>
 </html>
