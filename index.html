@@ -444,7 +444,10 @@ function T(key,vars={}){
 }
 function setLang(lang,btn){
   currentLang=lang;
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  localStorage.setItem('ya_lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+lang+"'"));
+  });
   if(btn)btn.classList.add('active');
   applyI18n();renderNotifications();renderSaleList(currentSales);
   const flags={'en':'🇺🇸 English selected','tr':'🇹🇷 Türkçe seçildi','es':'🇪🇸 Español seleccionado'};
@@ -603,7 +606,19 @@ document.getElementById('search-input').addEventListener('input',e=>{
   document.getElementById('map-count').textContent=currentSales.length+' sales near Boston, MA';
 });
 
-window.addEventListener('load',()=>{initMap();applyI18n();renderNotifications();});
+window.addEventListener('load',()=>{
+  // Load saved language
+  const savedLang = localStorage.getItem('ya_lang') || 'en';
+  currentLang = savedLang;
+  // Apply lang button active state
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    const onclick = b.getAttribute('onclick') || '';
+    b.classList.toggle('active', onclick.includes("'"+savedLang+"'"));
+  });
+  initMap();
+  applyI18n();
+  renderNotifications();
+});
 </script>
 
 <!-- LIGHTBOX -->

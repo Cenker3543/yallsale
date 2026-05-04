@@ -459,6 +459,16 @@ function showToast(msg) {
 document.getElementById('payment-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+window.addEventListener('load',function(){
+  const sl=localStorage.getItem('ya_lang');
+  if(sl&&sl!=='en'){
+    setTimeout(()=>{
+      const btn=document.querySelector('[data-lang="'+sl+'"]')||document.querySelector('.lang-btn[onclick*="'+sl+'"]');
+      if(typeof setLang==='function') setLang(sl,btn);
+    },100);
+  }
+});
 </script>
 </body>
 </html>

@@ -550,6 +550,16 @@ es:{
 };
 
 // Lang switcher injected into auth page
+document.addEventListener('DOMContentLoaded', function _langInit(){
+  const sl=localStorage.getItem('ya_lang');
+  if(sl&&typeof setLang==='function'){
+    setTimeout(()=>{ 
+      const btn=document.querySelector('[data-lang="'+sl+'"]');
+      if(typeof setAuthLang==='function') setAuthLang(sl);
+      else setLang(sl,btn);
+    },50);
+  }
+});
 document.addEventListener('DOMContentLoaded', () => {
   // Add lang switcher to top of right panel
   const rp = document.querySelector('.right-panel');
