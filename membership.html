@@ -352,6 +352,7 @@ es:{
 
 let lang = 'en';
 function setLang(l) {
+  localStorage.setItem('ya_lang', l);
   lang = l;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
   const L = T[l];
@@ -460,14 +461,10 @@ document.getElementById('payment-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-window.addEventListener('load',function(){
-  const sl=localStorage.getItem('ya_lang');
-  if(sl&&sl!=='en'){
-    setTimeout(()=>{
-      const btn=document.querySelector('[data-lang="'+sl+'"]')||document.querySelector('.lang-btn[onclick*="'+sl+'"]');
-      if(typeof setLang==='function') setLang(sl,btn);
-    },100);
-  }
+
+window.addEventListener('load', function(){
+  const saved = localStorage.getItem('ya_lang') || 'en';
+  setLang(saved);
 });
 </script>
 </body>

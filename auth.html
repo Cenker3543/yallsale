@@ -445,6 +445,14 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
+
+// Load saved language on page load
+window.addEventListener('load', function(){
+  const saved = localStorage.getItem('ya_lang') || 'en';
+  if (saved !== 'en') {
+    setTimeout(function(){ setAuthLang(saved); }, 150);
+  }
+});
 </script>
 </body>
 </html>
@@ -550,16 +558,6 @@ es:{
 };
 
 // Lang switcher injected into auth page
-document.addEventListener('DOMContentLoaded', function _langInit(){
-  const sl=localStorage.getItem('ya_lang');
-  if(sl&&typeof setLang==='function'){
-    setTimeout(()=>{ 
-      const btn=document.querySelector('[data-lang="'+sl+'"]');
-      if(typeof setAuthLang==='function') setAuthLang(sl);
-      else setLang(sl,btn);
-    },50);
-  }
-});
 document.addEventListener('DOMContentLoaded', () => {
   // Add lang switcher to top of right panel
   const rp = document.querySelector('.right-panel');
@@ -573,6 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setAuthLang(lang) {
+  localStorage.setItem('ya_lang', lang);
   const L = AT[lang];
   document.querySelectorAll('[data-lang]').forEach(b => {
     const isActive = b.dataset.lang === lang;

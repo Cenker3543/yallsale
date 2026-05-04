@@ -356,34 +356,29 @@ es:{
 };
 
 function setLang(lang) {
+  localStorage.setItem('ya_lang', lang);
   const L = T[lang];
+  if (!L) return;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   Object.entries(L).forEach(([id, val]) => {
     const el = document.getElementById(id);
     if (!el) return;
-    if (val.includes('<')) el.innerHTML = val;
+    if (String(val).includes('<')) el.innerHTML = val;
     else el.textContent = val;
   });
   document.documentElement.lang = lang;
 }
-</script>
 
-<script>
-// When any link goes to index.html, set the session flag
-document.querySelectorAll('a[href="index.html"]').forEach(function(a){
-  a.addEventListener('click', function(){
-    sessionStorage.setItem('ya_from_landing','1');
+window.addEventListener('load', function() {
+  // Set session flag for index.html redirect
+  document.querySelectorAll('a[href="index.html"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      sessionStorage.setItem('ya_from_landing','1');
+    });
   });
-});
-
-window.addEventListener('load',function(){
-  const sl=localStorage.getItem('ya_lang');
-  if(sl&&sl!=='en'){
-    setTimeout(()=>{
-      const btn=document.querySelector('[data-lang="'+sl+'"]')||document.querySelector('.lang-btn[onclick*="'+sl+'"]');
-      if(typeof setLang==='function') setLang(sl,btn);
-    },100);
-  }
+  // Load saved language
+  const saved = localStorage.getItem('ya_lang') || 'en';
+  setLang(saved);
 });
 </script>
 </body>
