@@ -212,6 +212,48 @@ textarea.form-input{resize:vertical;min-height:80px}
   .mn-lbl{font-size:10px;color:var(--text3)}
   .mn-item.active .mn-lbl{color:var(--g600);font-weight:600}
 }
+
+/* ── PHOTO SYSTEM ── */
+.photo-upload-area{border:2px dashed var(--border2);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.15s;background:var(--bg);position:relative}
+.photo-upload-area:hover{border-color:var(--g200);background:var(--g50)}
+.photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.photo-upload-icon{font-size:28px;margin-bottom:8px}
+.photo-upload-text{font-size:13px;font-weight:500;color:var(--text2)}
+.photo-upload-sub{font-size:11px;color:var(--text3);margin-top:3px}
+.photo-preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.photo-preview-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--bg)}
+.photo-preview-item img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-preview-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,0.6);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;border:none;line-height:1}
+.photo-preview-main{border:2px solid var(--g400)}
+.photo-count-badge{position:absolute;bottom:3px;left:3px;background:rgba(0,0,0,0.55);color:white;font-size:9px;padding:1px 5px;border-radius:4px}
+/* Product card with photo */
+.prod-img-real{width:100%;height:100%;object-fit:cover;display:block}
+.prod-photo-count{position:absolute;bottom:3px;right:3px;background:rgba(0,0,0,0.55);color:white;font-size:9px;padding:1px 5px;border-radius:4px;display:flex;align-items:center;gap:2px}
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;align-items:center;justify-content:center;flex-direction:column}
+.lightbox.show{display:flex}
+.lightbox-img{max-width:92vw;max-height:75vh;object-fit:contain;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.lightbox-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;color:white;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-nav{display:flex;align-items:center;gap:16px;margin-top:16px}
+.lightbox-nav-btn{width:40px;height:40px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.lightbox-nav-btn:hover{background:rgba(255,255,255,0.3)}
+.lightbox-counter{font-size:13px;color:rgba(255,255,255,0.7);min-width:60px;text-align:center}
+.lightbox-thumbs{display:flex;gap:8px;margin-top:12px;overflow-x:auto;max-width:90vw;padding:4px}
+.lightbox-thumb{width:52px;height:52px;object-fit:cover;border-radius:6px;cursor:pointer;opacity:0.5;border:2px solid transparent;flex-shrink:0;transition:all 0.15s}
+.lightbox-thumb.active{opacity:1;border-color:white}
+/* Add item panel */
+.add-item-panel{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:10px}
+.add-item-header{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.item-form-row{display:flex;gap:8px;margin-bottom:8px}
+.item-form-row .form-input{flex:1}
+.items-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.item-entry{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg);border-radius:8px;border:1px solid var(--border)}
+.item-entry-photos{display:flex;gap:4px}
+.item-entry-photo{width:36px;height:36px;border-radius:6px;object-fit:cover;cursor:pointer}
+.item-entry-info{flex:1;min-width:0}
+.item-entry-name{font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item-entry-price{font-size:11px;color:var(--g600);font-weight:600}
+.item-entry-remove{width:24px;height:24px;background:var(--r50);border:none;border-radius:50%;color:var(--r600);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -310,7 +352,40 @@ textarea.form-input{resize:vertical;min-height:80px}
         <div class="toggle-row"><div class="toggle-info"><div class="ti-t" data-i18n="opt.reserve">Accept reservations</div><div class="ti-s" data-i18n="opt.reserve_sub">Buyers hold items before sale day</div></div><div class="toggle on" id="t-reserve" onclick="toggleSwitch('t-reserve')"><div class="toggle-knob"></div></div></div>
         <div class="toggle-row"><div class="toggle-info"><div class="ti-t" data-i18n="opt.featured">⭐ Featured listing (+$3)</div><div class="ti-s" data-i18n="opt.featured_sub">Gold pin · top of results</div></div><div class="toggle off" id="t-featured" onclick="toggleSwitch('t-featured')"><div class="toggle-knob"></div></div></div>
       </div>
-      <button class="submit-btn" onclick="submitSale()" data-i18n="btn.publish">Publish — free</button>
+      
+<div class="form-card" id="items-section">
+  <div class="form-card-title">📦 <span id="items-title">Add items for sale</span></div>
+  
+  <div class="add-item-panel">
+    <div class="add-item-header">
+      <span id="add-item-title">Add a new item</span>
+    </div>
+    <div class="item-form-row">
+      <input class="form-input" id="item-name" placeholder="Item name (e.g. Oak Bookshelf)" style="flex:2"/>
+      <input class="form-input" id="item-price" placeholder="$0" type="number" style="flex:1;max-width:80px"/>
+    </div>
+    
+    <!-- Photo Upload -->
+    <div class="photo-upload-area" style="margin-bottom:8px">
+      <input type="file" id="item-photo-input" accept="image/*" multiple/>
+      <div class="photo-upload-icon">📷</div>
+      <div class="photo-upload-text" id="upload-text">Tap to add photos</div>
+      <div class="photo-upload-sub" id="upload-sub">Up to 8 photos per item · JPG, PNG</div>
+    </div>
+    
+    <!-- Photo Preview Grid -->
+    <div class="photo-preview-grid" id="item-photo-preview"></div>
+    
+    <button class="btn-primary" style="margin-top:8px;width:100%;padding:10px;font-size:13px" onclick="addItemToList()" id="add-item-btn">+ Add item to listing</button>
+  </div>
+  
+  <!-- Items List -->
+  <div class="items-list" id="items-list" style="margin-top:10px">
+    <div style="font-size:12px;color:var(--text3);text-align:center;padding:12px">No items added yet</div>
+  </div>
+</div>
+
+<button class="submit-btn" onclick="submitSale()" data-i18n="btn.publish">Publish — free</button>
       <div class="free-note" data-i18n="post.free_note">Reach buyers instantly ✨</div>
     </div></div>
   </div>
@@ -515,7 +590,7 @@ function shareSale(){if(!selectedSale)return;if(navigator.share)navigator.share(
 function submitSale(){const t=document.getElementById('f-title').value.trim(),a=document.getElementById('f-address').value.trim(),s=document.getElementById('f-start').value;if(!t||!a||!s){showToast(T('toast.fill_fields'));return;}showToast(T('toast.posted'));setTimeout(()=>goScreen('map',document.querySelector('.nav-item')),1500);}
 function toggleSwitch(id){const el=document.getElementById(id);el.classList.toggle('on');el.classList.toggle('off');}
 function markAllRead(){document.querySelectorAll('.notif-dot').forEach(d=>d.remove());document.getElementById('notif-badge').style.display='none';showToast(T('notif.mark_read'));}
-function goScreen(id,btn){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');document.querySelectorAll('.nav-item,.mn-item').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(id==='map'&&map)setTimeout(()=>map.resize(),100);}
+function goScreen(id,btn){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');document.querySelectorAll('.nav-item,.mn-item').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(id==='map'&&map)setTimeout(()=>map.resize(),100); if(id==='post')setTimeout(initPostPhotoUpload,100);}
 function dist(lat,lng){const R=3958.8,la=42.3601,lo=-71.0589,dL=(lat-la)*Math.PI/180,dl=(lng-lo)*Math.PI/180,a=Math.sin(dL/2)**2+Math.cos(la*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dl/2)**2;return(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))).toFixed(1);}
 function fmtDate(s,e){const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],d=new Date(s);if(!e||s===e)return days[d.getDay()];return days[d.getDay()]+'–'+days[new Date(e).getDay()];}
 function stars(r){return[1,2,3,4,5].map(i=>'<div class="star '+(i<=Math.round(r)?'on':'off')+'"></div>').join('');}
@@ -530,5 +605,17 @@ document.getElementById('search-input').addEventListener('input',e=>{
 
 window.addEventListener('load',()=>{initMap();applyI18n();renderNotifications();});
 </script>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img class="lightbox-img" id="lb-img" src="" alt=""/>
+  <div class="lightbox-nav">
+    <button class="lightbox-nav-btn" onclick="lbNav(-1)">‹</button>
+    <span class="lightbox-counter" id="lb-counter">1 / 1</span>
+    <button class="lightbox-nav-btn" onclick="lbNav(1)">›</button>
+  </div>
+  <div class="lightbox-thumbs" id="lb-thumbs"></div>
+</div>
 </body>
 </html>
