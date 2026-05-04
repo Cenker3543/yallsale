@@ -1,6 +1,3 @@
-<script>
-if(!sessionStorage.getItem('visited')){sessionStorage.setItem('visited','1');window.location.href='landing.html';}
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,10 +192,10 @@ textarea.form-input{resize:vertical;min-height:80px}
 <body>
 <div class="app">
 <div class="sidebar">
-  <div class="sidebar-logo">
+  <a href="landing.html" class="sidebar-logo" style="text-decoration:none">
     <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H13V13H7V17H3V10Z" fill="white" opacity="0.9"/><rect x="7.5" y="13" width="2" height="4" rx="1" fill="#97C459"/><rect x="10.5" y="13" width="2" height="4" rx="1" fill="#97C459"/><path d="M7 10h6" stroke="#C0DD97" stroke-width="1.2" stroke-linecap="round"/></svg></div>
     <div class="logo-text">y<span>All</span>sale</div>
-  </div>
+  </a>
   <div class="lang-bar">
     <button class="lang-btn active" onclick="setLang('en',this)">🇺🇸 EN</button>
     <button class="lang-btn" onclick="setLang('tr',this)">🇹🇷 TR</button>
