@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>yAllsale — Join the Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --g50:#EAF3DE;--g100:#C0DD97;--g200:#97C459;--g400:#639922;--g600:#3B6D11;--g800:#27500A;
+  --a50:#FAEEDA;--a200:#EF9F27;--a400:#BA7517;
+  --t50:#E1F5EE;--t600:#0F6E56;
+  --r50:#FCEBEB;--r400:#E24B4A;
+  --white:#FFFFFF;--bg:#F7F5F0;--text:#1A1A18;--text2:#5F5E5A;--text3:#888780;
+  --border:#E5E3DC;--border2:#CFCDC5;
+}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+
+.auth-app{display:flex;height:100vh}
+
+/* ── LEFT PANEL ── */
+.left-panel{width:420px;background:var(--g800);display:flex;flex-direction:column;padding:40px;flex-shrink:0;position:relative;overflow:hidden}
+.lp-bg{position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(192,221,151,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(239,159,39,0.08) 0%,transparent 50%)}
+.lp-content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+.lp-logo{display:flex;align-items:center;gap:10px;margin-bottom:auto}
+.lp-logo-icon{width:38px;height:38px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.lp-logo-text{font-size:20px;font-weight:700;color:white;letter-spacing:-0.5px}
+.lp-logo-text span{color:var(--g100)}
+.lp-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 0}
+.lp-headline{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:white;line-height:1.15;margin-bottom:16px;letter-spacing:-0.5px}
+.lp-headline .accent{color:var(--g100)}
+.lp-desc{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px}
+.trust-list{display:flex;flex-direction:column;gap:12px}
+.trust-item{display:flex;align-items:flex-start;gap:10px}
+.trust-check{width:20px;height:20px;background:rgba(192,221,151,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.trust-check svg{display:block}
+.trust-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.5}
+.trust-text strong{color:white}
+.lp-footer{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.5}
+
+/* ── RIGHT PANEL ── */
+.right-panel{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.step{display:none;flex:1;flex-direction:column;overflow-y:auto}
+.step.active{display:flex}
+.step::-webkit-scrollbar{width:3px}
+.step::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+/* ── STEP CONTENT ── */
+.step-inner{max-width:420px;width:100%;margin:0 auto;padding:40px 32px;flex:1;display:flex;flex-direction:column;justify-content:center}
+.step-num{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.step-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.2;letter-spacing:-0.3px}
+.step-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:28px}
+
+/* PROGRESS */
+.progress-bar{display:flex;gap:6px;margin-bottom:32px}
+.prog-dot{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background 0.3s}
+.prog-dot.done{background:var(--g600)}
+.prog-dot.active{background:var(--g200)}
+
+/* FORM */
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:0.3px}
+.form-input{padding:12px 14px;border:1.5px solid var(--border2);border-radius:12px;font-size:14px;color:var(--text);background:var(--white);outline:none;font-family:'DM Sans',sans-serif;transition:all 0.15s;width:100%}
+.form-input:focus{border-color:var(--g400);box-shadow:0 0 0 3px rgba(99,153,34,0.08)}
+.form-input::placeholder{color:var(--text3)}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+.form-helper{font-size:11px;color:var(--text3);margin-top:2px;line-height:1.5}
+.form-error{font-size:11px;color:var(--r400);margin-top:2px;display:none}
+
+/* BUTTONS */
+.btn-main{width:100%;padding:14px;background:var(--g600);color:white;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;margin-top:6px}
+.btn-main:hover{background:var(--g800)}
+.btn-main:disabled{background:var(--border2);cursor:not-allowed;color:var(--text3)}
+.btn-secondary{width:100%;padding:14px;background:var(--white);color:var(--text);border:1.5px solid var(--border2);border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;margin-top:8px}
+.btn-secondary:hover{background:var(--bg);border-color:var(--border)}
+.btn-google{width:100%;padding:13px;background:var(--white);color:var(--text);border:1.5px solid var(--border2);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.15s}
+.btn-google:hover{background:var(--bg);border-color:var(--border)}
+.divider{display:flex;align-items:center;gap:12px;margin:16px 0}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-text{font-size:12px;color:var(--text3);font-weight:500}
+.link-btn{background:none;border:none;color:var(--g600);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;transition:color 0.15s}
+.link-btn:hover{color:var(--g800)}
+.terms-text{font-size:11px;color:var(--text3);text-align:center;line-height:1.6;margin-top:14px}
+.terms-text a{color:var(--g600);text-decoration:none}
+
+/* SOCIAL LOGIN */
+.social-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+
+/* VERIFY STEPS */
+.verify-steps-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.verify-step-item{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.15s}
+.verify-step-item:hover{border-color:var(--g100);background:var(--g50)}
+.verify-step-item.done{border-color:var(--g100);background:var(--g50)}
+.verify-step-item.active-step{border-color:var(--g400);background:var(--g50);box-shadow:0 0 0 3px rgba(99,153,34,0.08)}
+.vs-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.vs-icon.done{background:var(--g600)}
+.vs-icon.pending{background:var(--bg)}
+.vs-info{flex:1}
+.vs-title{font-size:13px;font-weight:600;color:var(--text)}
+.vs-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.vs-status{font-size:11px;font-weight:500}
+.vs-status.done{color:var(--g600)}
+.vs-status.pending{color:var(--text3)}
+
+/* OTP INPUT */
+.otp-inputs{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+.otp-input{width:52px;height:60px;border:1.5px solid var(--border2);border-radius:12px;text-align:center;font-size:24px;font-weight:600;color:var(--text);background:var(--white);outline:none;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+.otp-input:focus{border-color:var(--g400);box-shadow:0 0 0 3px rgba(99,153,34,0.08)}
+
+/* ONBOARDING */
+.onboard-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.onboard-option{padding:16px 12px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all 0.15s}
+.onboard-option:hover{border-color:var(--g100)}
+.onboard-option.selected{border-color:var(--g400);background:var(--g50)}
+.onboard-emoji{font-size:24px;margin-bottom:6px;display:block}
+.onboard-label{font-size:12px;font-weight:500;color:var(--text)}
+
+/* SUCCESS */
+.success-icon{width:80px;height:80px;border-radius:50%;background:var(--g50);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px}
+.success-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;text-align:center;margin-bottom:10px;color:var(--text)}
+.success-sub{font-size:14px;color:var(--text2);text-align:center;line-height:1.6;margin-bottom:28px}
+.verified-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.vchip{display:flex;align-items:center;gap:5px;background:var(--g50);border:1px solid var(--g100);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--g800)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g800);color:white;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .left-panel{display:none}
+  .step-inner{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="auth-app">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="lp-bg"></div>
+    <div class="lp-content">
+      <div class="lp-logo">
+        <div class="lp-logo-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H13V13H7V17H3V10Z" fill="white" opacity="0.9"/><rect x="7.5" y="13" width="2" height="4" rx="1" fill="#97C459"/><rect x="10.5" y="13" width="2" height="4" rx="1" fill="#97C459"/></svg>
+        </div>
+        <div class="lp-logo-text">y<span>All</span>sale</div>
+      </div>
+      <div class="lp-main">
+        <h2 class="lp-headline">Real people.<br>Real sales.<br><span class="accent">Real community.</span></h2>
+        <p class="lp-desc">yAllsale is the only yard sale platform where every member is verified. No fake listings, no scams — just real neighbors.</p>
+        <div class="trust-list">
+          <div class="trust-item">
+            <div class="trust-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#97C459" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="trust-text"><strong>Government ID verified</strong> — every seller is who they say they are</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#97C459" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="trust-text"><strong>Address verification</strong> — every sale location confirmed before going live</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#97C459" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="trust-text"><strong>Seller ratings</strong> — transparent history and reviews from real buyers</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#97C459" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="trust-text"><strong>Free to browse</strong> — no account needed to find sales near you</div>
+          </div>
+        </div>
+      </div>
+      <div class="lp-footer">By joining, you agree to our community standards of honesty and respect. yAllsale reserves the right to remove any user who fails verification or violates community rules.</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- STEP 1: WELCOME / CHOICE -->
+    <div class="step active" id="step-welcome">
+      <div class="step-inner">
+        <div class="progress-bar">
+          <div class="prog-dot active"></div>
+          <div class="prog-dot"></div>
+          <div class="prog-dot"></div>
+          <div class="prog-dot"></div>
+        </div>
+        <div class="step-num">Step 1 of 4</div>
+        <h2 class="step-title">Welcome to yAllsale</h2>
+        <p class="step-sub">The trusted yard sale community. Create a free account to post sales, save favorites, and get personalized alerts.</p>
+
+        <div class="social-grid">
+          <button class="btn-google" onclick="nextStep('step-signup')">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.703-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            Continue with Google
+          </button>
+          <button class="btn-google" onclick="nextStep('step-signup')" style="border-color:var(--border2)">
+            <svg width="18" height="18" viewBox="0 0 814 1000" fill="none"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 651.9 0 556.6 0 476.3c0-159.6 104.6-244 207.2-244 79.6 0 145.3 50.5 195.4 50.5 47.9 0 122.3-53.5 215.5-53.5zm-74.9-209.4c38.3-43.6 67.1-103.7 67.1-163.8 0-8.4-.6-16.8-2-24.5-63.6 2.5-139.4 42.4-184.6 92.5-35.1 38.5-68.5 98.6-68.5 159.9 0 9.1 1.5 18.2 2.2 21.2 3.8.6 9.8 1.5 15.8 1.5 57.8 0 129.3-37.9 170-86.8z" fill="#000"/></svg>
+            Continue with Apple
+          </button>
+        </div>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <button class="btn-main" onclick="nextStep('step-signup')">Sign up with email</button>
+        <button class="btn-secondary" onclick="nextStep('step-login')">I already have an account</button>
+
+        <p class="terms-text">By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You'll be asked to verify your identity to post listings.</p>
+      </div>
+    </div>
+
+    <!-- STEP 2: SIGN UP -->
+    <div class="step" id="step-signup">
+      <div class="step-inner">
+        <div class="progress-bar">
+          <div class="prog-dot done"></div>
+          <div class="prog-dot active"></div>
+          <div class="prog-dot"></div>
+          <div class="prog-dot"></div>
+        </div>
+        <div class="step-num">Step 2 of 4</div>
+        <h2 class="step-title">Create your account</h2>
+        <p class="step-sub">Your basic information to get started. Verification comes next.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">First name</div>
+            <input class="form-input" id="f-firstname" placeholder="Mary" type="text"/>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Last name</div>
+            <input class="form-input" id="f-lastname" placeholder="Johnson" type="text"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Email address</div>
+          <input class="form-input" id="f-email" placeholder="mary@example.com" type="email"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Phone number</div>
+          <input class="form-input" id="f-phone" placeholder="+1 (617) 555-0123" type="tel"/>
+          <div class="form-helper">We'll send a verification code to this number</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Password</div>
+          <input class="form-input" id="f-pass" placeholder="Min. 8 characters" type="password"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">City / Neighborhood</div>
+          <input class="form-input" id="f-city" placeholder="Boston, MA" type="text"/>
+          <div class="form-helper">Used to show you nearby sales</div>
+        </div>
+
+        <button class="btn-main" onclick="validateSignup()">Continue →</button>
+        <div style="text-align:center;margin-top:14px;font-size:13px;color:var(--text3)">Already have an account? <button class="link-btn" onclick="goStep('step-login')">Sign in</button></div>
+      </div>
+    </div>
+
+    <!-- STEP 2B: LOGIN -->
+    <div class="step" id="step-login">
+      <div class="step-inner">
+        <div class="progress-bar">
+          <div class="prog-dot done"></div>
+          <div class="prog-dot active"></div>
+          <div class="prog-dot"></div>
+          <div class="prog-dot"></div>
+        </div>
+        <div class="step-num">Welcome back</div>
+        <h2 class="step-title">Sign in to yAllsale</h2>
+        <p class="step-sub">Good to see you again. Your verified profile is waiting.</p>
+
+        <div class="form-group">
+          <div class="form-label">Email address</div>
+          <input class="form-input" placeholder="your@email.com" type="email"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Password</div>
+          <input class="form-input" placeholder="Your password" type="password"/>
+        </div>
+        <div style="text-align:right;margin-bottom:16px">
+          <button class="link-btn" style="font-size:13px">Forgot password?</button>
+        </div>
+        <button class="btn-main" onclick="nextStep('step-verify')">Sign in →</button>
+        <div class="divider"><div class="divider-line"></div><div class="divider-text">or</div><div class="divider-line"></div></div>
+        <button class="btn-google" onclick="nextStep('step-onboard')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.703-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <div style="text-align:center;margin-top:14px;font-size:13px;color:var(--text3)">New to yAllsale? <button class="link-btn" onclick="goStep('step-signup')">Create account</button></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: VERIFY -->
+    <div class="step" id="step-verify">
+      <div class="step-inner">
+        <div class="progress-bar">
+          <div class="prog-dot done"></div>
+          <div class="prog-dot done"></div>
+          <div class="prog-dot active"></div>
+          <div class="prog-dot"></div>
+        </div>
+        <div class="step-num">Step 3 of 4</div>
+        <h2 class="step-title">Verify your phone</h2>
+        <p class="step-sub">We sent a 6-digit code to your phone number. This confirms you're a real person.</p>
+
+        <div style="background:var(--g50);border:1px solid var(--g100);border-radius:12px;padding:14px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px">📱</div>
+          <div style="font-size:13px;color:var(--g800)">Code sent to <strong id="phone-display">your number</strong></div>
+        </div>
+
+        <div class="otp-inputs">
+          <input class="otp-input" maxlength="1" type="tel" oninput="otpNext(this,0)"/>
+          <input class="otp-input" maxlength="1" type="tel" oninput="otpNext(this,1)"/>
+          <input class="otp-input" maxlength="1" type="tel" oninput="otpNext(this,2)"/>
+          <input class="otp-input" maxlength="1" type="tel" oninput="otpNext(this,3)"/>
+          <input class="otp-input" maxlength="1" type="tel" oninput="otpNext(this,4)"/>
+          <input class="otp-input" maxlength="1" type="tel" oninput="otpNext(this,5)"/>
+        </div>
+
+        <button class="btn-main" onclick="nextStep('step-onboard')">Verify & Continue →</button>
+        <div style="text-align:center;margin-top:14px;font-size:13px;color:var(--text3)">Didn't get a code? <button class="link-btn" onclick="showToast('Code resent! ✓')">Resend</button></div>
+      </div>
+    </div>
+
+    <!-- STEP 4: ONBOARDING -->
+    <div class="step" id="step-onboard">
+      <div class="step-inner">
+        <div class="progress-bar">
+          <div class="prog-dot done"></div>
+          <div class="prog-dot done"></div>
+          <div class="prog-dot done"></div>
+          <div class="prog-dot active"></div>
+        </div>
+        <div class="step-num">Step 4 of 4</div>
+        <h2 class="step-title">How will you use yAllsale?</h2>
+        <p class="step-sub">This helps us personalize your experience. You can always do both!</p>
+
+        <div class="onboard-options">
+          <div class="onboard-option selected" onclick="toggleOnboard(this)">
+            <span class="onboard-emoji">🔍</span>
+            <div class="onboard-label">Find & buy</div>
+          </div>
+          <div class="onboard-option" onclick="toggleOnboard(this)">
+            <span class="onboard-emoji">🏡</span>
+            <div class="onboard-label">Host sales</div>
+          </div>
+          <div class="onboard-option" onclick="toggleOnboard(this)">
+            <span class="onboard-emoji">💎</span>
+            <div class="onboard-label">Find antiques</div>
+          </div>
+          <div class="onboard-option" onclick="toggleOnboard(this)">
+            <span class="onboard-emoji">🛋️</span>
+            <div class="onboard-label">Find furniture</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">What categories interest you most?</div>
+          <select class="form-input">
+            <option>Furniture & Home</option>
+            <option>Electronics</option>
+            <option>Clothing & Fashion</option>
+            <option>Antiques & Collectibles</option>
+            <option>Books & Media</option>
+            <option>Tools & Garden</option>
+            <option>Everything!</option>
+          </select>
+        </div>
+
+        <div style="background:var(--a50);border:1px solid var(--a200);border-radius:12px;padding:14px 16px;margin-bottom:20px">
+          <div style="font-size:12px;font-weight:600;color:var(--a400);margin-bottom:4px">🪪 Want to post listings?</div>
+          <div style="font-size:12px;color:var(--a600);line-height:1.5">Complete Gov. ID verification after joining to unlock seller features. It takes 2 minutes and unlocks the verified badge on all your listings.</div>
+        </div>
+
+        <button class="btn-main" onclick="nextStep('step-success')">Let's go! →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: SUCCESS -->
+    <div class="step" id="step-success">
+      <div class="step-inner" style="text-align:center;justify-content:center">
+        <div class="success-icon">🎉</div>
+        <h2 class="success-title">You're in!</h2>
+        <p class="success-sub">Welcome to the yAllsale community. Your account is active and you can start browsing verified sales near you right now.</p>
+        <div class="verified-chips">
+          <div class="vchip">✓ Phone verified</div>
+          <div class="vchip">✓ Email verified</div>
+          <div class="vchip" style="background:var(--a50);border-color:var(--a100);color:#633806">🪪 ID verification pending</div>
+        </div>
+        <a href="index.html" style="display:block">
+          <button class="btn-main" style="margin-top:0">Open yAllsale App →</button>
+        </a>
+        <button class="btn-secondary" onclick="showToast('ID verification coming soon! 🪪')">Complete ID verification now</button>
+        <p style="font-size:12px;color:var(--text3);margin-top:16px;line-height:1.5">ID verification unlocks seller features and the verified badge. Only takes 2 minutes.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function goStep(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function nextStep(id) {
+  const phone = document.getElementById('f-phone');
+  if (phone) document.getElementById('phone-display').textContent = phone.value || 'your number';
+  goStep(id);
+}
+function validateSignup() {
+  const fn = document.getElementById('f-firstname').value.trim();
+  const em = document.getElementById('f-email').value.trim();
+  const ph = document.getElementById('f-phone').value.trim();
+  if (!fn || !em || !ph) {
+    showToast('Please fill in all required fields ⚠️');
+    return;
+  }
+  nextStep('step-verify');
+}
+function toggleOnboard(el) {
+  el.classList.toggle('selected');
+}
+function otpNext(el, idx) {
+  const inputs = document.querySelectorAll('.otp-input');
+  if (el.value && idx < 5) inputs[idx + 1].focus();
+  if (idx === 5 && el.value) {
+    setTimeout(() => nextStep('step-onboard'), 300);
+    showToast('Phone verified! ✓');
+  }
+}
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
+
+<script>
+const AT = {
+en:{
+  'step-num-1':'Step 1 of 4','step-num-2':'Step 2 of 4','step-num-3':'Step 3 of 4','step-num-4':'Step 4 of 4',
+  'welcome-title':'Welcome to yAllsale','welcome-sub':'The trusted yard sale community. Create a free account to post sales, save favorites, and get personalized alerts.',
+  'google-btn':'Continue with Google','apple-btn':'Continue with Apple','email-btn':'Sign up with email','signin-btn':'I already have an account',
+  'terms':'By continuing, you agree to our Terms of Service and Privacy Policy. You\'ll be asked to verify your identity to post listings.',
+  'signup-title':'Create your account','signup-sub':'Your basic information to get started. Verification comes next.',
+  'fn-label':'First name','ln-label':'Last name','email-label':'Email address','phone-label':'Phone number',
+  'phone-helper':"We'll send a verification code to this number",
+  'pass-label':'Password','city-label':'City / Neighborhood','city-helper':'Used to show you nearby sales',
+  'signup-continue':'Continue →','have-account':'Already have an account?','sign-in-link':'Sign in',
+  'login-title':'Sign in to yAllsale','login-sub':'Good to see you again. Your verified profile is waiting.',
+  'login-email':'Email address','login-pass':'Password','forgot':'Forgot password?','login-btn':'Sign in →',
+  'no-account':'New to yAllsale?','create-link':'Create account',
+  'verify-title':'Verify your phone','verify-sub':'We sent a 6-digit code to your phone number. This confirms you\'re a real person.',
+  'code-sent':'Code sent to','resend-text':"Didn't get a code?",'resend-link':'Resend','verify-btn':'Verify & Continue →',
+  'onboard-title':'How will you use yAllsale?','onboard-sub':'This helps us personalize your experience. You can always do both!',
+  'opt1':'Find & buy','opt2':'Host sales','opt3':'Find antiques','opt4':'Find furniture',
+  'cat-label':'What categories interest you most?','id-notice':'Want to post listings?',
+  'id-notice-desc':'Complete Gov. ID verification after joining to unlock seller features.',
+  'onboard-btn':"Let's go! →",
+  'success-title':"You're in!",'success-sub':'Welcome to the yAllsale community. Your account is active and you can start browsing verified sales near you right now.',
+  'chip1':'✓ Phone verified','chip2':'✓ Email verified','chip3':'🪪 ID verification pending',
+  'open-btn':'Open yAllsale App →','id-btn':'Complete ID verification now',
+  'id-note':'ID verification unlocks seller features and the verified badge. Only takes 2 minutes.',
+  'lp-tagline':'Real people.<br>Real sales.<br><span class="accent">Real community.</span>',
+  'lp-desc':"yAllsale is the only yard sale platform where every member is verified. No fake listings, no scams — just real neighbors.",
+  'trust1':'<strong>Government ID verified</strong> — every seller is who they say they are',
+  'trust2':'<strong>Address verification</strong> — every sale location confirmed before going live',
+  'trust3':'<strong>Seller ratings</strong> — transparent history and reviews from real buyers',
+  'trust4':'<strong>Free to browse</strong> — no account needed to find sales near you',
+  'lp-footer':"By joining, you agree to our community standards of honesty and respect."
+},
+tr:{
+  'step-num-1':'Adım 1/4','step-num-2':'Adım 2/4','step-num-3':'Adım 3/4','step-num-4':'Adım 4/4',
+  'welcome-title':"yAllsale'e Hoş Geldin",'welcome-sub':'Güvenilir yard sale topluluğu. Satış yayınlamak, favorilerini kaydetmek ve kişisel bildirimler almak için ücretsiz hesap oluştur.',
+  'google-btn':'Google ile devam et','apple-btn':'Apple ile devam et','email-btn':'E-posta ile kayıt ol','signin-btn':'Zaten hesabım var',
+  'terms':"Devam ederek Kullanım Şartları'nı ve Gizlilik Politikamızı kabul etmiş olursunuz.",
+  'signup-title':'Hesabını oluştur','signup-sub':'Başlamak için temel bilgilerin. Doğrulama bir sonraki adımda.',
+  'fn-label':'Ad','ln-label':'Soyad','email-label':'E-posta adresi','phone-label':'Telefon numarası',
+  'phone-helper':'Bu numaraya doğrulama kodu göndereceğiz',
+  'pass-label':'Şifre','city-label':'Şehir / Mahalle','city-helper':'Yakındaki satışları göstermek için kullanılır',
+  'signup-continue':'Devam Et →','have-account':'Zaten hesabın var mı?','sign-in-link':'Giriş yap',
+  'login-title':"yAllsale'e Giriş Yap",'login-sub':'Tekrar görüşmek güzel. Doğrulanmış profilin seni bekliyor.',
+  'login-email':'E-posta adresi','login-pass':'Şifre','forgot':'Şifremi unuttum','login-btn':'Giriş Yap →',
+  'no-account':"yAllsale'e yeni misin?",'create-link':'Hesap oluştur',
+  'verify-title':'Telefonunu doğrula','verify-sub':'Telefon numarana 6 haneli kod gönderdik. Bu gerçek bir kişi olduğunu doğrular.',
+  'code-sent':'Koda gönderildi','resend-text':'Kod gelmedimi?','resend-link':'Tekrar gönder','verify-btn':'Doğrula ve Devam Et →',
+  'onboard-title':"yAllsale'i nasıl kullanacaksın?",'onboard-sub':'Bu deneyimini kişiselleştirmemize yardımcı olur. Her ikisini de yapabilirsin!',
+  'opt1':'Bul ve satın al','opt2':'Satış düzenle','opt3':'Antika bul','opt4':'Mobilya bul',
+  'cat-label':'En çok hangi kategorilerle ilgileniyorsun?','id-notice':'İlan vermek ister misin?',
+  'id-notice-desc':'Satıcı özelliklerini açmak için katıldıktan sonra Kimlik Belgesi doğrulamasını tamamla.',
+  'onboard-btn':'Hadi başlayalım! →',
+  'success-title':'Hoş geldin!',"success-sub":"yAllsale topluluğuna hoş geldin. Hesabın aktif ve hemen yakındaki doğrulanmış satışlara göz atabilirsin.",
+  'chip1':'✓ Telefon doğrulandı','chip2':'✓ E-posta doğrulandı','chip3':'🪪 Kimlik doğrulama bekliyor',
+  'open-btn':'yAllsale Uygulamasını Aç →','id-btn':'Kimlik doğrulamayı şimdi tamamla',
+  'id-note':'Kimlik doğrulama satıcı özelliklerini ve doğrulanmış rozeti açar. Sadece 2 dakika sürer.',
+  'lp-tagline':'Gerçek insanlar.<br>Gerçek satışlar.<br><span class="accent">Gerçek topluluk.</span>',
+  'lp-desc':"yAllsale, her üyenin doğrulandığı tek yard sale platformudur. Sahte ilan yok, dolandırıcılık yok — sadece gerçek komşular.",
+  'trust1':'<strong>Resmi kimlik doğrulandı</strong> — her satıcı söyledikleri kişidir',
+  'trust2':'<strong>Adres doğrulama</strong> — her satış konumu yayına girmeden teyit edilir',
+  'trust3':'<strong>Satıcı puanları</strong> — şeffaf geçmiş ve gerçek alıcılardan yorumlar',
+  'trust4':'<strong>Ücretsiz göz atın</strong> — yakındaki satışları bulmak için hesap gerekmez',
+  'lp-footer':'Katılarak dürüstlük ve saygı topluluk standartlarımızı kabul etmiş olursunuz.'
+},
+es:{
+  'step-num-1':'Paso 1 de 4','step-num-2':'Paso 2 de 4','step-num-3':'Paso 3 de 4','step-num-4':'Paso 4 de 4',
+  'welcome-title':'Bienvenido a yAllsale','welcome-sub':'La comunidad de garage sales de confianza. Crea una cuenta gratuita para publicar ventas, guardar favoritos y recibir alertas.',
+  'google-btn':'Continuar con Google','apple-btn':'Continuar con Apple','email-btn':'Registrarse con correo','signin-btn':'Ya tengo una cuenta',
+  'terms':"Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.",
+  'signup-title':'Crea tu cuenta','signup-sub':'Tu información básica para comenzar. La verificación viene después.',
+  'fn-label':'Nombre','ln-label':'Apellido','email-label':'Correo electrónico','phone-label':'Número de teléfono',
+  'phone-helper':'Te enviaremos un código de verificación a este número',
+  'pass-label':'Contraseña','city-label':'Ciudad / Vecindario','city-helper':'Se usa para mostrarte ventas cercanas',
+  'signup-continue':'Continuar →','have-account':'¿Ya tienes una cuenta?','sign-in-link':'Iniciar sesión',
+  'login-title':'Iniciar sesión en yAllsale','login-sub':'Qué bueno verte de nuevo. Tu perfil verificado te espera.',
+  'login-email':'Correo electrónico','login-pass':'Contraseña','forgot':'¿Olvidaste tu contraseña?','login-btn':'Iniciar sesión →',
+  'no-account':'¿Nuevo en yAllsale?','create-link':'Crear cuenta',
+  'verify-title':'Verifica tu teléfono','verify-sub':'Enviamos un código de 6 dígitos a tu número de teléfono.',
+  'code-sent':'Código enviado a','resend-text':'¿No recibiste el código?','resend-link':'Reenviar','verify-btn':'Verificar y Continuar →',
+  'onboard-title':'¿Cómo usarás yAllsale?','onboard-sub':'Esto nos ayuda a personalizar tu experiencia.',
+  'opt1':'Encontrar y comprar','opt2':'Organizar ventas','opt3':'Buscar antigüedades','opt4':'Buscar muebles',
+  'cat-label':'¿Qué categorías te interesan más?','id-notice':'¿Quieres publicar anuncios?',
+  'id-notice-desc':'Completa la verificación de ID oficial después de unirte para desbloquear funciones de vendedor.',
+  'onboard-btn':'¡Vamos! →',
+  'success-title':'¡Ya estás dentro!','success-sub':'Bienvenido a la comunidad yAllsale. Tu cuenta está activa y puedes explorar ventas verificadas cercanas ahora mismo.',
+  'chip1':'✓ Teléfono verificado','chip2':'✓ Correo verificado','chip3':'🪪 Verificación de ID pendiente',
+  'open-btn':'Abrir App yAllsale →','id-btn':'Completar verificación de ID ahora',
+  'id-note':'La verificación de ID desbloquea funciones de vendedor y el sello verificado. Solo 2 minutos.',
+  'lp-tagline':'Personas reales.<br>Ventas reales.<br><span class="accent">Comunidad real.</span>',
+  'lp-desc':"yAllsale es la única plataforma de garage sales donde cada miembro está verificado. Sin anuncios falsos, sin estafas.",
+  'trust1':'<strong>ID oficial verificado</strong> — cada vendedor es quien dice ser',
+  'trust2':'<strong>Verificación de dirección</strong> — cada ubicación confirmada antes de publicarse',
+  'trust3':'<strong>Calificaciones de vendedores</strong> — historial transparente y reseñas reales',
+  'trust4':'<strong>Gratis para explorar</strong> — no necesitas cuenta para ver ventas cercanas',
+  'lp-footer':'Al unirte, aceptas nuestros estándares comunitarios de honestidad y respeto.'
+}
+};
+
+// Lang switcher injected into auth page
+document.addEventListener('DOMContentLoaded', () => {
+  // Add lang switcher to top of right panel
+  const rp = document.querySelector('.right-panel');
+  const sw = document.createElement('div');
+  sw.style.cssText = 'display:flex;justify-content:flex-end;padding:14px 32px 0;gap:4px;flex-shrink:0';
+  sw.innerHTML = `
+    <button class="lang-btn active" data-lang="en" onclick="setAuthLang('en')" style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:14px;border:1px solid #CFCDC5;cursor:pointer;font-family:DM Sans,sans-serif;background:transparent;color:#888780;transition:all 0.15s">🇺🇸 EN</button>
+    <button class="lang-btn" data-lang="tr" onclick="setAuthLang('tr')" style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:14px;border:1px solid #CFCDC5;cursor:pointer;font-family:DM Sans,sans-serif;background:transparent;color:#888780;transition:all 0.15s">🇹🇷 TR</button>
+    <button class="lang-btn" data-lang="es" onclick="setAuthLang('es')" style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:14px;border:1px solid #CFCDC5;cursor:pointer;font-family:DM Sans,sans-serif;background:transparent;color:#888780;transition:all 0.15s">🇪🇸 ES</button>`;
+  rp.prepend(sw);
+});
+
+function setAuthLang(lang) {
+  const L = AT[lang];
+  document.querySelectorAll('[data-lang]').forEach(b => {
+    const isActive = b.dataset.lang === lang;
+    b.style.background = isActive ? '#3B6D11' : 'transparent';
+    b.style.color = isActive ? 'white' : '#888780';
+    b.style.borderColor = isActive ? '#3B6D11' : '#CFCDC5';
+  });
+  // Update left panel
+  document.querySelector('.lp-headline').innerHTML = L['lp-tagline'];
+  document.querySelector('.lp-desc').textContent = L['lp-desc'];
+  document.querySelector('.lp-footer').textContent = L['lp-footer'];
+  const trustItems = document.querySelectorAll('.trust-text');
+  ['trust1','trust2','trust3','trust4'].forEach((k,i) => { if(trustItems[i]) trustItems[i].innerHTML = L[k]; });
+  document.documentElement.lang = lang;
+}
+</script>

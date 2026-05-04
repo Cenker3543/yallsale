@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="yAllsale — The trusted yard sale marketplace. Real people, real sales, real community."/>
+<title>yAllsale — Real People. Real Sales. Real Community.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g50:#EAF3DE;--g100:#C0DD97;--g200:#97C459;--g400:#639922;--g600:#3B6D11;--g800:#27500A;--a50:#FAEEDA;--a200:#EF9F27;--a400:#BA7517;--t50:#E1F5EE;--t600:#0F6E56;--white:#FFFFFF;--bg:#F7F5F0;--text:#1A1A18;--text2:#5F5E5A;--text3:#888780;--border:#E5E3DC}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);line-height:1.6;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(229,227,220,0.5)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:34px;height:34px;background:var(--g800);border-radius:9px;display:flex;align-items:center;justify-content:center}
+.logo-text{font-size:18px;font-weight:700;color:var(--g800);letter-spacing:-0.5px}
+.logo-text span{color:var(--g400)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{font-size:14px;color:var(--text2);text-decoration:none;font-weight:500;transition:color 0.15s}
+.nav-links a:hover{color:var(--g600)}
+.lang-switcher{display:flex;gap:4px;background:var(--bg);border-radius:20px;padding:3px}
+.lang-btn{font-size:11px;font-weight:600;padding:4px 10px;border-radius:14px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text3);transition:all 0.15s}
+.lang-btn.active{background:var(--g600);color:white}
+.nav-cta{background:var(--g600);color:white;padding:9px 20px;border-radius:22px;font-size:14px;font-weight:500;text-decoration:none;transition:background 0.15s}
+.nav-cta:hover{background:var(--g800)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 40px 60px;position:relative;overflow:hidden;background:linear-gradient(160deg,#F7F5F0 0%,#EAF3DE 50%,#F7F5F0 100%)}
+.hero-bg{position:absolute;border-radius:50%;opacity:0.15;pointer-events:none}
+.hero-bg.c1{width:600px;height:600px;background:var(--g200);top:-100px;right:-200px}
+.hero-bg.c2{width:400px;height:400px;background:var(--a200);bottom:-100px;left:-100px}
+.hero-content{max-width:640px;text-align:center;position:relative;z-index:1;animation:fadeUp 0.8s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:var(--g50);border:1px solid var(--g100);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--g800);margin-bottom:24px;letter-spacing:0.3px}
+.hero-badge-dot{width:7px;height:7px;background:var(--g400);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,72px);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:20px}
+.hero-title .accent{color:var(--g600);position:relative;display:inline-block}
+.hero-title .accent::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:var(--g200);border-radius:2px}
+.hero-sub{font-size:18px;color:var(--text2);line-height:1.6;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.btn-primary{background:var(--g600);color:white;padding:15px 32px;border-radius:14px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.15s;box-shadow:0 4px 14px rgba(59,109,17,0.3);display:inline-block}
+.btn-primary:hover{background:var(--g800);transform:translateY(-1px)}
+.btn-outline{background:white;color:var(--text);padding:15px 32px;border-radius:14px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:all 0.15s;display:inline-block}
+.btn-outline:hover{border-color:var(--g200);transform:translateY(-1px)}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.hero-stat-num{font-size:28px;font-weight:700;color:var(--g600);font-family:'Playfair Display',serif}
+.hero-stat-lbl{font-size:12px;color:var(--text3);margin-top:2px;font-weight:500}
+.section{padding:80px 40px}
+.section.dark{background:var(--g800);color:white}
+.section.gray{background:var(--bg)}
+.section-label{font-size:12px;font-weight:600;color:var(--g600);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;text-align:center}
+.section.dark .section-label{color:var(--g100)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:700;text-align:center;margin-bottom:14px;line-height:1.2}
+.section-sub{font-size:16px;color:var(--text2);text-align:center;max-width:500px;margin:0 auto 50px;line-height:1.6}
+.section.dark .section-title{color:white}
+.section.dark .section-sub{color:rgba(255,255,255,0.65)}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:0 auto 40px}
+.trust-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px;transition:background 0.2s}
+.trust-card:hover{background:rgba(255,255,255,0.12)}
+.tc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.tc-title{font-size:15px;font-weight:600;color:white;margin-bottom:6px}
+.tc-desc{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6}
+.promise-box{max-width:640px;margin:0 auto;padding:20px 24px;background:rgba(192,221,151,0.1);border:1px solid rgba(192,221,151,0.3);border-radius:14px;display:flex;align-items:center;gap:14px}
+.promise-box-icon{font-size:24px;flex-shrink:0}
+.promise-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.5}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;max-width:900px;margin:0 auto;position:relative}
+.steps-grid::before{content:'';position:absolute;top:36px;left:15%;right:15%;height:1px;background:var(--border);z-index:0}
+.step{text-align:center;padding:0 20px;position:relative;z-index:1}
+.step-icon{width:72px;height:72px;border-radius:50%;background:white;border:2px solid var(--g100);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.step-title{font-size:15px;font-weight:600;margin-bottom:7px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.6}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;max-width:960px;margin:0 auto}
+.feature-card{padding:26px;border-radius:16px;border:1px solid var(--border);transition:all 0.2s}
+.feature-card:hover{border-color:var(--g100);box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.feature-card.hl{background:var(--g50);border-color:var(--g100)}
+.feat-emoji{font-size:28px;margin-bottom:12px;display:block}
+.feat-title{font-size:16px;font-weight:600;margin-bottom:7px}
+.feat-desc{font-size:13px;color:var(--text2);line-height:1.6}
+.feat-badge{display:inline-block;font-size:10px;font-weight:600;background:var(--g600);color:white;padding:2px 8px;border-radius:8px;margin-top:8px}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;max-width:900px;margin:0 auto}
+.review-card{background:white;border:1px solid var(--border);border-radius:16px;padding:22px}
+.r-stars{display:flex;gap:3px;margin-bottom:12px}
+.r-star{width:13px;height:13px;background:var(--a200);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.r-text{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:14px;font-style:italic}
+.r-author{display:flex;align-items:center;gap:10px}
+.r-avatar{width:36px;height:36px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--g800);flex-shrink:0}
+.r-name{font-size:13px;font-weight:600}
+.r-meta{font-size:11px;color:var(--text3);margin-top:1px}
+.r-chip{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:var(--t600);font-weight:500;background:var(--t50);padding:2px 7px;border-radius:8px;margin-top:4px}
+.cta-section{padding:80px 40px;background:linear-gradient(135deg,var(--g800) 0%,#173404 100%);text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(192,221,151,0.1) 0%,transparent 60%)}
+.cta-inner{position:relative;z-index:1}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:white;margin-bottom:14px;line-height:1.2}
+.cta-sub{font-size:16px;color:rgba(255,255,255,0.7);max-width:480px;margin:0 auto 36px;line-height:1.6}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.btn-cta-w{background:white;color:var(--g800);padding:15px 32px;border-radius:14px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.15s;display:inline-block}
+.btn-cta-w:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.2)}
+.btn-cta-o{background:transparent;color:white;padding:15px 32px;border-radius:14px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(255,255,255,0.3);transition:all 0.15s;display:inline-block}
+.btn-cta-o:hover{background:rgba(255,255,255,0.08)}
+.cta-note{font-size:13px;color:rgba(255,255,255,0.5)}
+footer{background:var(--text);color:rgba(255,255,255,0.6);padding:48px 40px 28px}
+.footer-top{display:grid;grid-template-columns:1fr repeat(3,auto);gap:40px;margin-bottom:36px;align-items:start}
+.footer-brand-name{font-size:18px;font-weight:700;color:white;letter-spacing:-0.5px;margin-bottom:10px}
+.footer-brand-name span{color:var(--g200)}
+.footer-brand-desc{font-size:13px;line-height:1.6;max-width:220px}
+.footer-col-title{font-size:12px;font-weight:600;color:white;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:8px;transition:color 0.15s}
+.footer-col a:hover{color:white}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px}
+@media(max-width:768px){nav{padding:12px 16px}.nav-links{display:none}.section,.cta-section{padding:60px 20px}.footer-top{grid-template-columns:1fr;gap:24px}.steps-grid::before{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H13V13H7V17H3V10Z" fill="white" opacity="0.9"/><rect x="7.5" y="13" width="2" height="4" rx="1" fill="#97C459"/><rect x="10.5" y="13" width="2" height="4" rx="1" fill="#97C459"/></svg></div>
+    <div class="logo-text">y<span>All</span>sale</div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#trust" id="nav-how">How it works</a>
+      <a href="#features" id="nav-features">Features</a>
+      <a href="#trust" id="nav-trust">Trust & Safety</a>
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">🇺🇸 EN</button>
+      <button class="lang-btn" data-lang="tr" onclick="setLang('tr')">🇹🇷 TR</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
+    </div>
+    <a href="index.html" class="nav-cta" id="nav-open">Open App →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg c1"></div>
+  <div class="hero-bg c2"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="hero-badge-dot"></div><span id="hero-badge">Now live in Boston, MA</span></div>
+    <h1 class="hero-title" id="hero-title">Yard sales,<br><span class="accent">done right.</span></h1>
+    <p class="hero-sub" id="hero-sub">The only yard sale marketplace where every seller is verified. Browse real sales, real items, real neighbors — no fake listings, no scams.</p>
+    <div class="hero-actions">
+      <a href="index.html" class="btn-primary" id="hero-btn1">Find Sales Near Me →</a>
+      <a href="auth.html" class="btn-outline" id="hero-btn2">Host a Sale</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num" id="stat1-num">100%</div><div class="hero-stat-lbl" id="stat1-lbl">Verified sellers</div></div>
+      <div><div class="hero-stat-num" id="stat2-num">Free</div><div class="hero-stat-lbl" id="stat2-lbl">To post & browse</div></div>
+      <div><div class="hero-stat-num" id="stat3-num">3 langs</div><div class="hero-stat-lbl" id="stat3-lbl">EN · TR · ES</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="trust">
+  <div class="section-label" id="trust-label">Our commitment</div>
+  <h2 class="section-title" id="trust-head">Built on trust, not just technology.</h2>
+  <p class="section-sub" id="trust-sub">Every person on yAllsale is a real, verified human. We built our entire platform around this principle — because yard sales should feel like meeting a neighbor, not a stranger.</p>
+  <div class="trust-grid">
+    <div class="trust-card"><div class="tc-icon" style="background:rgba(192,221,151,0.2)">🪪</div><div class="tc-title" id="p1-title">Government ID Verification</div><div class="tc-desc" id="p1-desc">Every seller verifies their identity with a government-issued ID + selfie match. No anonymous listings, ever.</div></div>
+    <div class="trust-card"><div class="tc-icon" style="background:rgba(93,202,165,0.2)">⭐</div><div class="tc-title" id="p2-title">Seller History & Ratings</div><div class="tc-desc" id="p2-desc">See every seller's full history — how many sales they've hosted, their star rating, and reviews from real buyers.</div></div>
+    <div class="trust-card"><div class="tc-icon" style="background:rgba(239,159,39,0.2)">📍</div><div class="tc-title" id="p3-title">Address Verification</div><div class="tc-desc" id="p3-desc">Sale locations are verified before going live. No fake addresses, no wasted trips. Every pin on the map is real.</div></div>
+    <div class="trust-card"><div class="tc-icon" style="background:rgba(55,138,221,0.2)">💬</div><div class="tc-title" id="p4-title">Safe Messaging</div><div class="tc-desc" id="p4-desc">All communication stays in-app. Your phone number stays private. Messages are monitored for safety.</div></div>
+  </div>
+  <div class="promise-box">
+    <div class="promise-box-icon">🛡️</div>
+    <div class="promise-box-text" id="trust-promise"><strong>Our promise:</strong> yAllsale will never allow anonymous listings. A real name, a real face, a real address — that's the yAllsale standard.</div>
+  </div>
+</section>
+
+<section class="section gray">
+  <div class="section-label" id="how-label">Simple process</div>
+  <h2 class="section-title" id="how-title">How yAllsale works</h2>
+  <p class="section-sub" id="how-sub">Whether you're hunting for treasures or clearing out your home, we make it easy.</p>
+  <div class="steps-grid">
+    <div class="step"><div class="step-icon">📍</div><div class="step-title" id="s1-title">Set your location</div><div class="step-desc" id="s1-desc">Allow location access or enter your address to see sales within your chosen radius.</div></div>
+    <div class="step"><div class="step-icon">🔍</div><div class="step-title" id="s2-title">Browse verified sales</div><div class="step-desc" id="s2-desc">See all nearby yard sales on a map. Filter by date, category, or verified sellers only.</div></div>
+    <div class="step"><div class="step-icon">📦</div><div class="step-title" id="s3-title">Browse items online</div><div class="step-desc" id="s3-desc">Many sellers list their items in advance. Browse photos, prices and reserve your favorites.</div></div>
+    <div class="step"><div class="step-icon">🏡</div><div class="step-title" id="s4-title">Show up & save big</div><div class="step-desc" id="s4-desc">Get directions, show up knowing what to expect, and find incredible deals in your neighborhood.</div></div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-label" id="feat-label">What makes us different</div>
+  <h2 class="section-title" id="feat-title">Built for real yard sale culture</h2>
+  <p class="section-sub" id="feat-sub">Not just a map. A complete marketplace built around how yard sales actually work.</p>
+  <div class="features-grid">
+    <div class="feature-card hl"><span class="feat-emoji">🛡️</span><div class="feat-title" id="f1-title">ID-Verified Sellers</div><div class="feat-desc" id="f1-desc">Every seller completes multi-step verification: phone, email, government ID, and selfie match. Fake listings are impossible.</div><div class="feat-badge" id="unique-badge">UNIQUE TO yAllsale</div></div>
+    <div class="feature-card"><span class="feat-emoji">📦</span><div class="feat-title" id="f2-title">Online Item Listings</div><div class="feat-desc" id="f2-desc">Sellers can list items with photos and prices before the sale. Browse and reserve what you want before you even leave home.</div></div>
+    <div class="feature-card"><span class="feat-emoji">🔔</span><div class="feat-title" id="f3-title">Item Tracking Alerts</div><div class="feat-desc" id="f3-desc">Tell us what you're looking for. When it appears near you, we'll notify you instantly.</div></div>
+    <div class="feature-card"><span class="feat-emoji">⭐</span><div class="feat-title" id="f4-title">Seller Ratings & History</div><div class="feat-desc" id="f4-desc">Know who you're visiting before you go. Full sales history, star ratings, and authentic reviews.</div></div>
+    <div class="feature-card"><span class="feat-emoji">🗺️</span><div class="feat-title" id="f5-title">Real-Time Map</div><div class="feat-desc" id="f5-desc">Interactive map powered by Mapbox. Filter by date, distance, category, or verified-only sales.</div></div>
+    <div class="feature-card"><span class="feat-emoji">🌎</span><div class="feat-title" id="f6-title">3 Languages</div><div class="feat-desc" id="f6-desc">English, Spanish, and Turkish — because great yard sales belong to the whole community.</div></div>
+  </div>
+</section>
+
+<section class="section gray">
+  <div class="section-label" id="reviews-label">Community voices</div>
+  <h2 class="section-title" id="reviews-title">What our neighbors say</h2>
+  <p class="section-sub" id="reviews-sub">Real reviews from real people in our community.</p>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="r-stars"><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div></div><p class="r-text" id="r1-text">"Finally a yard sale app where I know who I'm dealing with. The verified badge gives me so much confidence!"</p><div class="r-author"><div class="r-avatar">SL</div><div><div class="r-name">Sarah L.</div><div class="r-meta">Brookline, MA</div><div class="r-chip">✓ Verified buyer</div></div></div></div>
+    <div class="review-card"><div class="r-stars"><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div></div><p class="r-text" id="r2-text">"I listed my items the night before and had 8 reservations by morning. Made $340 before the sale even started!"</p><div class="r-author"><div class="r-avatar">MJ</div><div><div class="r-name">Mark J.</div><div class="r-meta">Newton, MA</div><div class="r-chip">✓ Verified seller</div></div></div></div>
+    <div class="review-card"><div class="r-stars"><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div><div class="r-star"></div></div><p class="r-text" id="r3-text">"The item tracking feature is genius. I got notified about a vintage record player 0.4 miles away!"</p><div class="r-author"><div class="r-avatar">CR</div><div><div class="r-name">Carlos R.</div><div class="r-meta">Somerville, MA</div><div class="r-chip">✓ Verified buyer</div></div></div></div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <h2 class="cta-title" id="cta-title">Ready to find your<br>next treasure?</h2>
+    <p class="cta-sub" id="cta-sub">Join thousands of verified neighbors buying and selling in your community.</p>
+    <div class="cta-actions">
+      <a href="index.html" class="btn-cta-w" id="cta-btn1">🗺 Find Sales Near Me</a>
+      <a href="auth.html" class="btn-cta-o" id="cta-btn2">Host a Yard Sale</a>
+    </div>
+    <div class="cta-note" id="cta-note">Free to use · No account required to browse · Verified sellers only</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-brand-name">y<span>All</span>sale</div><div class="footer-brand-desc" id="footer-desc">The trusted yard sale marketplace. Real people, real sales, real community.</div></div>
+    <div class="footer-col"><div class="footer-col-title" id="fc1-title">Product</div><a href="index.html" id="fc1-1">Find Sales</a><a href="auth.html" id="fc1-2">Host a Sale</a><a href="#features" id="fc1-3">Features</a></div>
+    <div class="footer-col"><div class="footer-col-title" id="fc2-title">Trust</div><a href="#trust" id="fc2-1">Verification</a><a href="#" id="fc2-2">Safety Policy</a><a href="#" id="fc2-3">Community Rules</a></div>
+    <div class="footer-col"><div class="footer-col-title" id="fc3-title">Company</div><a href="#" id="fc3-1">About</a><a href="#" id="fc3-2">Privacy Policy</a><a href="#" id="fc3-3">Terms of Service</a></div>
+  </div>
+  <div class="footer-bottom">
+    <div id="footer-copy">© 2025 yAllsale. All rights reserved.</div>
+    <div id="footer-trust">🛡️ Verified-first marketplace · Boston, MA</div>
+  </div>
+</footer>
+
+<script>
+const T = {
+en:{
+  'nav-how':'How it works','nav-features':'Features','nav-trust':'Trust & Safety','nav-open':'Open App →',
+  'hero-badge':'Now live in Boston, MA',
+  'hero-title':'Yard sales,<br><span class="accent">done right.</span>',
+  'hero-sub':'The only yard sale marketplace where every seller is verified. Browse real sales, real items, real neighbors — no fake listings, no scams.',
+  'hero-btn1':'Find Sales Near Me →','hero-btn2':'Host a Sale',
+  'stat1-num':'100%','stat1-lbl':'Verified sellers','stat2-num':'Free','stat2-lbl':'To post & browse','stat3-num':'3 langs','stat3-lbl':'EN · TR · ES',
+  'trust-label':'Our commitment','trust-head':'Built on trust, not just technology.',
+  'trust-sub':'Every person on yAllsale is a real, verified human. We built our entire platform around this principle.',
+  'p1-title':'Government ID Verification','p1-desc':'Every seller verifies their identity with a government-issued ID + selfie match. No anonymous listings, ever.',
+  'p2-title':'Seller History & Ratings','p2-desc':"See every seller's full history — star rating, and reviews from real buyers.",
+  'p3-title':'Address Verification','p3-desc':'Sale locations are verified before going live. Every pin on the map is real.',
+  'p4-title':'Safe Messaging','p4-desc':'All communication stays in-app. Your phone number stays private.',
+  'trust-promise':'<strong>Our promise:</strong> yAllsale will never allow anonymous listings. A real name, a real face, a real address.',
+  'how-label':'Simple process','how-title':'How yAllsale works','how-sub':"Whether you're hunting for treasures or clearing out your home, we make it easy.",
+  's1-title':'Set your location','s1-desc':'Allow location access or enter your address to see nearby sales.',
+  's2-title':'Browse verified sales','s2-desc':'See all nearby yard sales on a map. Filter by date, category, or verified sellers only.',
+  's3-title':'Browse items online','s3-desc':'Many sellers list their items in advance. Browse photos, prices and reserve favorites.',
+  's4-title':'Show up & save big','s4-desc':'Get directions, show up knowing what to expect, and find incredible deals.',
+  'feat-label':'What makes us different','feat-title':'Built for real yard sale culture','feat-sub':'Not just a map. A complete marketplace.',
+  'f1-title':'ID-Verified Sellers','f1-desc':'Every seller completes multi-step verification: phone, email, government ID, and selfie match.',
+  'f2-title':'Online Item Listings','f2-desc':'Sellers list items with photos and prices before the sale. Browse and reserve before you leave home.',
+  'f3-title':'Item Tracking Alerts','f3-desc':"Tell us what you're looking for. We'll notify you instantly when it appears near you.",
+  'f4-title':'Seller Ratings & History','f4-desc':'Full sales history, star ratings, and authentic reviews from verified buyers.',
+  'f5-title':'Real-Time Map','f5-desc':'Interactive map. Filter by date, distance, category, or verified-only sales.',
+  'f6-title':'3 Languages','f6-desc':'English, Spanish, and Turkish — for the whole community.',
+  'unique-badge':'UNIQUE TO yAllsale',
+  'reviews-label':'Community voices','reviews-title':'What our neighbors say','reviews-sub':'Real reviews from real people.',
+  'r1-text':'"Finally a yard sale app where I know who I\'m dealing with. The verified badge gives me so much confidence!"',
+  'r2-text':'"I listed my items the night before and had 8 reservations by morning. Made $340 before the sale even started!"',
+  'r3-text':'"The item tracking feature is genius. I got notified about a vintage record player 0.4 miles away!"',
+  'cta-title':'Ready to find your<br>next treasure?','cta-sub':'Join thousands of verified neighbors buying and selling in your community.',
+  'cta-btn1':'🗺 Find Sales Near Me','cta-btn2':'Host a Yard Sale',
+  'cta-note':'Free to use · No account required to browse · Verified sellers only',
+  'footer-desc':'The trusted yard sale marketplace. Real people, real sales, real community.',
+  'fc1-title':'Product','fc1-1':'Find Sales','fc1-2':'Host a Sale','fc1-3':'Features',
+  'fc2-title':'Trust','fc2-1':'Verification','fc2-2':'Safety Policy','fc2-3':'Community Rules',
+  'fc3-title':'Company','fc3-1':'About','fc3-2':'Privacy Policy','fc3-3':'Terms of Service',
+  'footer-copy':'© 2025 yAllsale. All rights reserved.','footer-trust':'🛡️ Verified-first marketplace · Boston, MA'
+},
+tr:{
+  'nav-how':'Nasıl çalışır','nav-features':'Özellikler','nav-trust':'Güven & Güvenlik','nav-open':'Uygulamayı Aç →',
+  'hero-badge':"Boston'da canlı",
+  'hero-title':'Yard sale,<br><span class="accent">doğru yapılmış.</span>',
+  'hero-sub':"Her satıcının kimliğinin doğrulandığı tek yard sale platformu. Gerçek satışlar, gerçek ürünler, gerçek komşular — sahte ilan yok, dolandırıcılık yok.",
+  'hero-btn1':'Yakındaki Satışları Bul →','hero-btn2':'Satış Düzenle',
+  'stat1-num':'%100','stat1-lbl':'Doğrulanmış satıcılar','stat2-num':'Ücretsiz','stat2-lbl':'İlan ver ve göz at','stat3-num':'3 dil','stat3-lbl':'TR · EN · ES',
+  'trust-label':'Taahhüdümüz','trust-head':'Teknoloji değil, güven üzerine inşa edildi.',
+  'trust-sub':"yAllsale'deki her kişi gerçek ve doğrulanmış bir insandır. Platformumuzu bu prensip üzerine inşa ettik.",
+  'p1-title':'Resmi Kimlik Doğrulama','p1-desc':'Her satıcı resmi kimlik belgesi ve selfie eşleşmesiyle kimliğini doğrular. Anonim ilan asla olmaz.',
+  'p2-title':'Satıcı Geçmişi ve Puanlama','p2-desc':'Her satıcının tam geçmişini görün — yıldız puanı ve gerçek alıcılardan yorumlar.',
+  'p3-title':'Adres Doğrulama','p3-desc':'Satış konumları yayına girmeden doğrulanır. Haritadaki her pin gerçek.',
+  'p4-title':'Güvenli Mesajlaşma','p4-desc':'Tüm iletişim uygulama içinde kalır. Telefon numaran gizli kalır.',
+  'trust-promise':'<strong>Taahhüdümüz:</strong> yAllsale hiçbir zaman anonim ilana izin vermez. Gerçek isim, gerçek yüz, gerçek adres.',
+  'how-label':'Basit süreç','how-title':'yAllsale nasıl çalışır','how-sub':'Hazine avcısı olsun ya da evini boşaltıyor olsun, işi kolaylaştırıyoruz.',
+  's1-title':'Konumunu ayarla','s1-desc':'Konum erişimine izin ver veya adresini girerek yakındaki satışları gör.',
+  's2-title':'Doğrulanmış satışlara bak','s2-desc':'Yakındaki tüm yard saleleri haritada gör. Tarih, kategori veya doğrulanmış satıcılara göre filtrele.',
+  's3-title':'Ürünlere online bak','s3-desc':'Pek çok satıcı ürünlerini önceden listeler. Fotoğraf ve fiyatları incele, favorilerini ayırt.',
+  's4-title':'Git ve büyük tasarruf et','s4-desc':'Yol tarifi al, ne bulacağını bilerek git ve mahalledeki inanılmaz fırsatları yakala.',
+  'feat-label':'Bizi farklı yapan','feat-title':'Gerçek yard sale kültürü için','feat-sub':'Sadece harita değil. Eksiksiz platform.',
+  'f1-title':'Kimlik Doğrulamalı Satıcılar','f1-desc':'Her satıcı çok adımlı doğrulamayı tamamlar: telefon, e-posta, kimlik belgesi ve selfie eşleşmesi.',
+  'f2-title':'Online Ürün Listesi','f2-desc':'Satıcılar fotoğraf ve fiyatlarla önceden ürün listeler. Evden çıkmadan rezervasyon yap.',
+  'f3-title':'Ürün Takip Bildirimleri','f3-desc':'Ne aradığını söyle. Yakınında çıktığında anında bildirim.',
+  'f4-title':'Satıcı Puanlama ve Geçmişi','f4-desc':'Tam satış geçmişi, yıldız puanları ve doğrulanmış alıcılardan gerçek yorumlar.',
+  'f5-title':'Gerçek Zamanlı Harita','f5-desc':'Tarih, mesafe, kategori veya sadece doğrulanmış filtresiyle interaktif harita.',
+  'f6-title':'3 Dil','f6-desc':'Türkçe, İngilizce ve İspanyolca — tüm topluluk için.',
+  'unique-badge':'yAllsale\'e ÖZEL',
+  'reviews-label':'Topluluk sesleri','reviews-title':'Komşularımız ne diyor','reviews-sub':'Topluluğumuzdaki gerçek insanlardan gerçek yorumlar.',
+  'r1-text':'"Nihayet kimin satış yaptığını bildiğim bir yard sale uygulaması. Doğrulanmış rozet bana çok güven veriyor!"',
+  'r2-text':'"Akşam ürünlerimi listeledim, sabaha kadar 8 rezervasyonum oldu. Satış başlamadan $340 kazandım!"',
+  'r3-text':'"Ürün takip özelliği dahice. 0.4 mil uzaktaki vintage pikap için bildirim aldım!"',
+  'cta-title':'Sonraki hazineyi<br>bulmaya hazır mısın?','cta-sub':'Topluluğunda alıp satan binlerce doğrulanmış komşuya katıl.',
+  'cta-btn1':'🗺 Yakındaki Satışları Bul','cta-btn2':'Yard Sale Düzenle',
+  'cta-note':'Kullanımı ücretsiz · Göz atmak için hesap gerekmez · Sadece doğrulanmış satıcılar',
+  'footer-desc':'Güvenilir yard sale platformu. Gerçek insanlar, gerçek satışlar, gerçek topluluk.',
+  'fc1-title':'Ürün','fc1-1':'Satış Bul','fc1-2':'Satış Düzenle','fc1-3':'Özellikler',
+  'fc2-title':'Güven','fc2-1':'Doğrulama','fc2-2':'Güvenlik Politikası','fc2-3':'Topluluk Kuralları',
+  'fc3-title':'Şirket','fc3-1':'Hakkında','fc3-2':'Gizlilik Politikası','fc3-3':'Kullanım Şartları',
+  'footer-copy':'© 2025 yAllsale. Tüm hakları saklıdır.','footer-trust':'🛡️ Doğrulama öncelikli platform · Boston, MA'
+},
+es:{
+  'nav-how':'Cómo funciona','nav-features':'Características','nav-trust':'Confianza','nav-open':'Abrir App →',
+  'hero-badge':'Ya disponible en Boston, MA',
+  'hero-title':'Garage sales,<br><span class="accent">hechos bien.</span>',
+  'hero-sub':'El único marketplace de garage sales donde cada vendedor está verificado. Ventas reales, artículos reales, vecinos reales — sin anuncios falsos, sin estafas.',
+  'hero-btn1':'Encontrar Ventas Cerca →','hero-btn2':'Organizar una Venta',
+  'stat1-num':'100%','stat1-lbl':'Vendedores verificados','stat2-num':'Gratis','stat2-lbl':'Publicar y navegar','stat3-num':'3 idiomas','stat3-lbl':'ES · EN · TR',
+  'trust-label':'Nuestro compromiso','trust-head':'Construido sobre confianza, no solo tecnología.',
+  'trust-sub':'Cada persona en yAllsale es un ser humano real y verificado. Construimos toda nuestra plataforma alrededor de este principio.',
+  'p1-title':'Verificación de ID oficial','p1-desc':'Cada vendedor verifica su identidad con una ID oficial + selfie. Sin anuncios anónimos, nunca.',
+  'p2-title':'Historial y calificaciones','p2-desc':'Ve el historial completo de cada vendedor — calificación y reseñas de compradores reales.',
+  'p3-title':'Verificación de dirección','p3-desc':'Las ubicaciones se verifican antes de publicarse. Cada pin en el mapa es real.',
+  'p4-title':'Mensajería segura','p4-desc':'Toda comunicación queda dentro de la app. Tu número de teléfono permanece privado.',
+  'trust-promise':'<strong>Nuestra promesa:</strong> yAllsale nunca permitirá anuncios anónimos. Nombre real, cara real, dirección real.',
+  'how-label':'Proceso simple','how-title':'Cómo funciona yAllsale','how-sub':'Ya sea que busques tesoros o vacíes tu casa, lo hacemos fácil.',
+  's1-title':'Configura tu ubicación','s1-desc':'Permite el acceso a la ubicación o ingresa tu dirección para ver ventas cercanas.',
+  's2-title':'Explora ventas verificadas','s2-desc':'Ve todas las garage sales cercanas en un mapa. Filtra por fecha, categoría o solo verificados.',
+  's3-title':'Explora artículos online','s3-desc':'Muchos vendedores listan artículos con anticipación. Explora fotos y reserva tus favoritos.',
+  's4-title':'Ve y ahorra mucho','s4-desc':'Obtén indicaciones, llega sabiendo qué esperar y encuentra increíbles ofertas.',
+  'feat-label':'Qué nos hace diferentes','feat-title':'Para la cultura real de garage sales','feat-sub':'No solo un mapa. Un marketplace completo.',
+  'f1-title':'Vendedores con ID verificado','f1-desc':'Cada vendedor completa verificación multi-paso: teléfono, correo, ID oficial y selfie.',
+  'f2-title':'Listado de artículos online','f2-desc':'Los vendedores listan artículos con fotos y precios. Explora y reserva antes de salir de casa.',
+  'f3-title':'Alertas de seguimiento','f3-desc':'Dinos qué buscas. Te notificamos instantáneamente cuando aparezca cerca.',
+  'f4-title':'Calificaciones e historial','f4-desc':'Historial completo, estrellas y reseñas auténticas de compradores verificados.',
+  'f5-title':'Mapa en tiempo real','f5-desc':'Mapa interactivo con filtros por fecha, distancia, categoría o solo verificados.',
+  'f6-title':'3 Idiomas','f6-desc':'Inglés, español y turco — para toda la comunidad.',
+  'unique-badge':'ÚNICO de yAllsale',
+  'reviews-label':'Voces de la comunidad','reviews-title':'Qué dicen nuestros vecinos','reviews-sub':'Reseñas reales de personas reales.',
+  'r1-text':'"¡Por fin una app de garage sales donde sé con quién trato. El sello verificado me da mucha confianza!"',
+  'r2-text':'"Listé mis artículos la noche anterior y tuve 8 reservas por la mañana. ¡Gané $340 antes de que empezara la venta!"',
+  'r3-text':'"La función de seguimiento es genial. ¡Me notificaron de un tocadiscos vintage a 0.4 millas!"',
+  'cta-title':'¿Listo para encontrar<br>tu próximo tesoro?','cta-sub':'Únete a miles de vecinos verificados comprando y vendiendo en tu comunidad.',
+  'cta-btn1':'🗺 Encontrar Ventas','cta-btn2':'Organizar Garage Sale',
+  'cta-note':'Gratis · Sin cuenta para explorar · Solo vendedores verificados',
+  'footer-desc':'El marketplace de garage sales de confianza. Personas reales, ventas reales, comunidad real.',
+  'fc1-title':'Producto','fc1-1':'Encontrar Ventas','fc1-2':'Organizar Venta','fc1-3':'Características',
+  'fc2-title':'Confianza','fc2-1':'Verificación','fc2-2':'Política de Seguridad','fc2-3':'Reglas de Comunidad',
+  'fc3-title':'Empresa','fc3-1':'Acerca de','fc3-2':'Privacidad','fc3-3':'Términos de Servicio',
+  'footer-copy':'© 2025 yAllsale. Todos los derechos reservados.','footer-trust':'🛡️ Marketplace verificado · Boston, MA'
+}
+};
+
+function setLang(lang) {
+  const L = T[lang];
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  Object.entries(L).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (val.includes('<')) el.innerHTML = val;
+    else el.textContent = val;
+  });
+  document.documentElement.lang = lang;
+}
+</script>
+</body>
+</html>

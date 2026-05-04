@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>yAllsale — Become Verified</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--g50:#EAF3DE;--g100:#C0DD97;--g200:#97C459;--g400:#639922;--g600:#3B6D11;--g800:#27500A;--a50:#FAEEDA;--a100:#FAC775;--a200:#EF9F27;--a400:#BA7517;--t50:#E1F5EE;--t200:#5DCAA5;--t600:#0F6E56;--r50:#FCEBEB;--r400:#E24B4A;--bl50:#E6F1FB;--bl600:#185FA5;--gy50:#F1EFE8;--gy100:#D3D1C7;--gy600:#5F5E5A;--white:#fff;--bg:#F7F5F0;--text:#1A1A18;--text2:#5F5E5A;--text3:#888780;--border:#E5E3DC;--border2:#CFCDC5}
+html,body{min-height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo-icon{width:30px;height:30px;background:var(--g800);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo-text{font-size:16px;font-weight:700;color:var(--g800);letter-spacing:-0.4px}
+.nav-logo-text span{color:var(--g400)}
+.nav-back{margin-left:auto;font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:4px}
+/* HERO */
+.page-hero{padding:40px 20px 0;text-align:center;max-width:600px;margin:0 auto}
+.hero-label{font-size:11px;font-weight:600;color:var(--g600);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,42px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-0.5px}
+.hero-title .acc{color:var(--g600)}
+.hero-sub{font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:32px;max-width:460px;margin-left:auto;margin-right:auto}
+/* LANG */
+.lang-bar{display:flex;justify-content:center;gap:6px;margin-bottom:32px}
+.lang-btn{font-size:11px;font-weight:600;padding:5px 12px;border-radius:14px;border:1px solid var(--border2);cursor:pointer;font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text3);transition:all 0.15s}
+.lang-btn.active{background:var(--g600);color:white;border-color:var(--g600)}
+/* PLANS */
+.plans-wrap{max-width:900px;margin:0 auto;padding:0 16px 60px}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:40px}
+.plan-card{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:24px;position:relative;transition:all 0.2s}
+.plan-card.popular{border-color:var(--g400);box-shadow:0 0 0 3px var(--g50)}
+.plan-card.highlighted{border-color:var(--a200)}
+.plan-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--g600);color:white;font-size:10px;font-weight:700;padding:3px 14px;border-radius:0 0 10px 10px;letter-spacing:0.5px;white-space:nowrap}
+.plan-badge.amber{background:var(--a400)}
+.plan-icon{font-size:32px;margin-bottom:14px;display:block}
+.plan-name{font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px}
+.plan-price{display:flex;align-items:flex-end;gap:4px;margin:10px 0 14px}
+.plan-amount{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--text);line-height:1}
+.plan-period{font-size:13px;color:var(--text3);margin-bottom:4px}
+.plan-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:18px}
+.plan-features{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.plan-feature{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text2)}
+.feat-check{width:16px;height:16px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:9px}
+.feat-check.yes{background:var(--g600);color:white}
+.feat-check.no{background:var(--gy100);color:var(--gy600)}
+.plan-btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+.plan-btn.primary{background:var(--g600);color:white}
+.plan-btn.primary:hover{background:var(--g800)}
+.plan-btn.secondary{background:var(--bg);color:var(--text);border:1.5px solid var(--border2)}
+.plan-btn.secondary:hover{background:var(--gy50)}
+.plan-btn.amber{background:var(--a400);color:white}
+.plan-btn.amber:hover{background:var(--a600)}
+.plan-btn:disabled{opacity:0.5;cursor:not-allowed}
+/* TRUST SECTION */
+.trust-strip{background:var(--g800);border-radius:16px;padding:20px 24px;margin-bottom:20px;display:flex;gap:20px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px;flex:1;min-width:180px}
+.trust-item-icon{width:32px;height:32px;background:rgba(192,221,151,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.trust-item-text{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.4}
+.trust-item-text strong{color:white;display:block}
+/* VERIFICATION STEPS */
+.verify-flow{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.vf-title{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.vf-steps{display:flex;gap:0;position:relative}
+.vf-steps::before{content:'';position:absolute;top:16px;left:16px;right:16px;height:2px;background:var(--border);z-index:0}
+.vf-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+.vf-step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;border:2px solid var(--border);background:var(--white);transition:all 0.3s}
+.vf-step-dot.done{background:var(--t600);border-color:var(--t600);color:white}
+.vf-step-dot.active{background:var(--g600);border-color:var(--g600);color:white}
+.vf-step-label{font-size:10px;color:var(--text3);text-align:center;font-weight:500}
+.vf-step-label.active{color:var(--g600);font-weight:600}
+.vf-step-label.done{color:var(--t600)}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--white);border-radius:20px;padding:24px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:6px;font-family:'Playfair Display',serif}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+.modal-close{float:right;cursor:pointer;font-size:22px;color:var(--text3);background:none;border:none;line-height:1}
+.security-note{background:var(--bl50);border:1px solid #B5D4F4;border-radius:10px;padding:10px 12px;font-size:12px;color:var(--bl600);display:flex;gap:8px;align-items:flex-start;margin-top:12px}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g800);color:white;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+/* LOADING */
+.spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){.plans-grid{grid-template-columns:1fr}.trust-strip{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H13V13H7V17H3V10Z" fill="white"/><rect x="7.5" y="13" width="2" height="4" rx="1" fill="#97C459"/><rect x="10.5" y="13" width="2" height="4" rx="1" fill="#97C459"/></svg></div>
+    <div class="nav-logo-text">y<span>All</span>sale</div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to app</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-label" id="hero-label">Membership plans</div>
+  <h1 class="hero-title" id="hero-title">Join the <span class="acc">verified</span><br>community</h1>
+  <p class="hero-sub" id="hero-sub">Start free. Upgrade when you're ready to buy, sell, and connect with verified neighbors.</p>
+</div>
+
+<div class="lang-bar">
+  <button class="lang-btn active" data-lang="en" onclick="setLang('en')">🇺🇸 EN</button>
+  <button class="lang-btn" data-lang="tr" onclick="setLang('tr')">🇹🇷 TR</button>
+  <button class="lang-btn" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
+</div>
+
+<div class="plans-wrap">
+
+  <!-- VERIFICATION FLOW -->
+  <div class="verify-flow">
+    <div class="vf-title">🛡️ <span id="vf-title">Verification steps — what happens after you join</span></div>
+    <div class="vf-steps">
+      <div class="vf-step">
+        <div class="vf-step-dot done">✓</div>
+        <div class="vf-step-label done" id="vs1">Phone</div>
+      </div>
+      <div class="vf-step">
+        <div class="vf-step-dot done">✓</div>
+        <div class="vf-step-label done" id="vs2">Email</div>
+      </div>
+      <div class="vf-step">
+        <div class="vf-step-dot active">💳</div>
+        <div class="vf-step-label active" id="vs3">Verified plan</div>
+      </div>
+      <div class="vf-step">
+        <div class="vf-step-dot" style="font-size:16px">🪪</div>
+        <div class="vf-step-label" id="vs4">Gov. ID</div>
+      </div>
+      <div class="vf-step">
+        <div class="vf-step-dot" style="font-size:16px">🤳</div>
+        <div class="vf-step-label" id="vs5">Selfie match</div>
+      </div>
+      <div class="vf-step">
+        <div class="vf-step-dot" style="font-size:16px">✅</div>
+        <div class="vf-step-label" id="vs6">Verified!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANS -->
+  <div class="plans-grid">
+
+    <!-- FREE -->
+    <div class="plan-card">
+      <span class="plan-icon">👋</span>
+      <div class="plan-name" id="p1-name">Free</div>
+      <div class="plan-price">
+        <div class="plan-amount">$0</div>
+        <div class="plan-period" id="p1-period">forever</div>
+      </div>
+      <div class="plan-desc" id="p1-desc">Browse sales and explore your neighborhood. No account needed to get started.</div>
+      <div class="plan-features">
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf1-1">Browse nearby sales on map</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf1-2">View item listings</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf1-3">Save sales to favorites</span></div>
+        <div class="plan-feature"><div class="feat-check no">✗</div><span id="pf1-4" style="color:var(--text3)">Post listings</span></div>
+        <div class="plan-feature"><div class="feat-check no">✗</div><span id="pf1-5" style="color:var(--text3)">Reserve items online</span></div>
+        <div class="plan-feature"><div class="feat-check no">✗</div><span id="pf1-6" style="color:var(--text3)">Verified badge</span></div>
+        <div class="plan-feature"><div class="feat-check no">✗</div><span id="pf1-7" style="color:var(--text3)">Message sellers</span></div>
+      </div>
+      <button class="plan-btn secondary" onclick="goToApp()" id="p1-btn">Browse sales for free</button>
+    </div>
+
+    <!-- VERIFIED -->
+    <div class="plan-card popular">
+      <div class="plan-badge" id="p2-badge">MOST POPULAR</div>
+      <span class="plan-icon">🛡️</span>
+      <div class="plan-name" id="p2-name">Verified Member</div>
+      <div class="plan-price">
+        <div class="plan-amount">$2.99</div>
+        <div class="plan-period" id="p2-period">one time</div>
+      </div>
+      <div class="plan-desc" id="p2-desc">One-time payment includes ID verification, verified badge, and full marketplace access.</div>
+      <div class="plan-features">
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf2-1">Everything in Free</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf2-2">Post up to 3 listings</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf2-3">Reserve items online</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf2-4">🛡️ Verified badge on profile</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf2-5">ID + selfie verification</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf2-6">Message buyers & sellers</span></div>
+        <div class="plan-feature"><div class="feat-check no">✗</div><span id="pf2-7" style="color:var(--text3)">Featured listings</span></div>
+      </div>
+      <button class="plan-btn primary" onclick="startCheckout('membership_verified')" id="p2-btn">Get Verified — $2.99</button>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card highlighted">
+      <div class="plan-badge amber" id="p3-badge">FOR SELLERS</div>
+      <span class="plan-icon">⭐</span>
+      <div class="plan-name" id="p3-name">Pro Seller</div>
+      <div class="plan-price">
+        <div class="plan-amount">$9.99</div>
+        <div class="plan-period" id="p3-period">/month</div>
+      </div>
+      <div class="plan-desc" id="p3-desc">For serious sellers. Unlimited listings, featured priority, analytics, and early access to new features.</div>
+      <div class="plan-features">
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-1">Everything in Verified</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-2">Unlimited listings</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-3">1 free featured listing/month</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-4">Analytics dashboard</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-5">Priority in search results</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-6">Early access to features</span></div>
+        <div class="plan-feature"><div class="feat-check yes">✓</div><span id="pf3-7">Cancel anytime</span></div>
+      </div>
+      <button class="plan-btn amber" onclick="startCheckout('membership_pro')" id="p3-btn">Go Pro — $9.99/mo</button>
+    </div>
+
+  </div>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-item"><div class="trust-item-icon">🔒</div><div class="trust-item-text"><strong id="ts1-title">Secure payment</strong><span id="ts1-desc">Powered by Stripe. We never store your card details.</span></div></div>
+    <div class="trust-item"><div class="trust-item-icon">🪪</div><div class="trust-item-text"><strong id="ts2-title">ID verification included</strong><span id="ts2-desc">Gov. ID + selfie match powered by Stripe Identity.</span></div></div>
+    <div class="trust-item"><div class="trust-item-icon">↩️</div><div class="trust-item-text"><strong id="ts3-title">30-day refund</strong><span id="ts3-desc">Not satisfied? Contact us for a full refund within 30 days.</span></div></div>
+    <div class="trust-item"><div class="trust-item-icon">🚫</div><div class="trust-item-text"><strong id="ts4-title">No hidden fees</strong><span id="ts4-desc">The price you see is the price you pay. Always.</span></div></div>
+  </div>
+
+  <!-- FEATURED LISTING ADD-ON -->
+  <div style="background:var(--a50);border:1.5px solid var(--a100);border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="font-size:28px">⭐</div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:15px;font-weight:600;margin-bottom:4px" id="feat-title">Featured listing add-on</div>
+      <div style="font-size:13px;color:var(--text2)" id="feat-desc">Make your sale stand out with a gold pin on the map and top placement in search results for 7 days.</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:22px;font-weight:700;color:var(--a600);font-family:'Playfair Display',serif">$3.00</div>
+      <div style="font-size:11px;color:var(--text3)" id="feat-period">per listing, 7 days</div>
+    </div>
+    <button class="plan-btn amber" style="width:auto;padding:11px 20px" onclick="startCheckout('featured_listing')" id="feat-btn">Feature my sale</button>
+  </div>
+
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title" id="modal-title">Complete your purchase</div>
+    <div class="modal-sub" id="modal-sub">You'll be redirected to our secure Stripe checkout page.</div>
+    <div id="modal-summary" style="background:var(--bg);border-radius:12px;padding:14px;margin-bottom:16px"></div>
+    <button class="plan-btn primary" id="modal-pay-btn" onclick="processPayment()">
+      <span id="pay-btn-text">Pay securely with Stripe →</span>
+    </button>
+    <div class="security-note">
+      <span>🔒</span>
+      <span id="security-note">Your payment is processed by Stripe. yAllsale never sees or stores your card details. 256-bit SSL encryption.</span>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Config
+const SUPABASE_URL = 'https://mgakdlawqrhbqfeizgpf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_J_F7Wk0SB3eCLnKqmd5o6g_o3IgkZfE';
+
+let currentCheckoutType = null;
+let isLoading = false;
+
+// ── TRANSLATIONS ──
+const T = {
+en:{
+  'hero-label':'Membership plans','hero-title':'Join the <span class="acc">verified</span><br>community',
+  'hero-sub':'Start free. Upgrade when you\'re ready to buy, sell, and connect with verified neighbors.',
+  'vf-title':'Verification steps — what happens after you join',
+  'vs1':'Phone','vs2':'Email','vs3':'Verified plan','vs4':'Gov. ID','vs5':'Selfie match','vs6':'Verified!',
+  'p1-name':'Free','p1-period':'forever','p1-desc':'Browse sales and explore your neighborhood.',
+  'p2-name':'Verified Member','p2-period':'one time','p2-badge':'MOST POPULAR',
+  'p2-desc':'One-time payment includes ID verification, verified badge, and full marketplace access.',
+  'p3-name':'Pro Seller','p3-period':'/month','p3-badge':'FOR SELLERS',
+  'p3-desc':'For serious sellers. Unlimited listings, featured priority, analytics.',
+  'p1-btn':'Browse sales for free','p2-btn':'Get Verified — $2.99','p3-btn':'Go Pro — $9.99/mo',
+  'pf1-1':'Browse nearby sales on map','pf1-2':'View item listings','pf1-3':'Save sales to favorites',
+  'pf1-4':'Post listings','pf1-5':'Reserve items online','pf1-6':'Verified badge','pf1-7':'Message sellers',
+  'pf2-1':'Everything in Free','pf2-2':'Post up to 3 listings','pf2-3':'Reserve items online',
+  'pf2-4':'🛡️ Verified badge on profile','pf2-5':'ID + selfie verification','pf2-6':'Message buyers & sellers','pf2-7':'Featured listings',
+  'pf3-1':'Everything in Verified','pf3-2':'Unlimited listings','pf3-3':'1 free featured listing/month',
+  'pf3-4':'Analytics dashboard','pf3-5':'Priority in search results','pf3-6':'Early access to features','pf3-7':'Cancel anytime',
+  'ts1-title':'Secure payment','ts1-desc':'Powered by Stripe. We never store your card details.',
+  'ts2-title':'ID verification included','ts2-desc':'Gov. ID + selfie match powered by Stripe Identity.',
+  'ts3-title':'30-day refund','ts3-desc':'Not satisfied? Contact us for a full refund within 30 days.',
+  'ts4-title':'No hidden fees','ts4-desc':'The price you see is the price you pay. Always.',
+  'feat-title':'Featured listing add-on','feat-desc':'Gold pin on map + top of search results for 7 days.','feat-period':'per listing, 7 days','feat-btn':'Feature my sale',
+  'modal-verified-title':'Become a Verified Member','modal-verified-sub':'Pay once, verified forever. Includes ID verification.',
+  'modal-pro-title':'Go Pro Seller','modal-pro-sub':'Cancel anytime. Billed monthly.',
+  'modal-featured-title':'Feature your listing','modal-featured-sub':'7 days of top placement.',
+  'pay-btn-text':'Pay securely with Stripe →','security-note':'Your payment is processed by Stripe. yAllsale never sees or stores your card details.'
+},
+tr:{
+  'hero-label':'Üyelik planları','hero-title':'<span class="acc">Doğrulanmış</span><br>topluluğa katıl',
+  'hero-sub':'Ücretsiz başla. Almaya, satmaya ve doğrulanmış komşularla bağlantı kurmaya hazır olduğunda yükselt.',
+  'vf-title':'Doğrulama adımları — katıldıktan sonra ne olur',
+  'vs1':'Telefon','vs2':'E-posta','vs3':'Doğrulanmış plan','vs4':'Kimlik Belgesi','vs5':'Selfie eşleşmesi','vs6':'Doğrulandı!',
+  'p1-name':'Ücretsiz','p1-period':'sonsuza kadar','p1-desc':'Satışlara göz at ve mahalleyi keşfet.',
+  'p2-name':'Doğrulanmış Üye','p2-period':'tek seferlik','p2-badge':'EN POPÜLER',
+  'p2-desc':'Tek seferlik ödeme kimlik doğrulama, doğrulanmış rozet ve tam platform erişimi içerir.',
+  'p3-name':'Pro Satıcı','p3-period':'/ay','p3-badge':'SATICILAR İÇİN',
+  'p3-desc':'Ciddi satıcılar için. Sınırsız ilan, öne çıkan öncelik, analitik.',
+  'p1-btn':'Ücretsiz satışlara bak','p2-btn':'Doğrulan — $2.99','p3-btn':'Pro Ol — $9.99/ay',
+  'pf1-1':'Haritada yakındaki satışlara bak','pf1-2':'Ürün listelerini gör','pf1-3':'Satışları favorilere ekle',
+  'pf1-4':'İlan ver','pf1-5':'Online rezervasyon','pf1-6':'Doğrulanmış rozet','pf1-7':'Satıcılara mesaj at',
+  'pf2-1':'Ücretsiz\'deki her şey','pf2-2':'3 adede kadar ilan ver','pf2-3':'Online rezervasyon yap',
+  'pf2-4':'🛡️ Profilde doğrulanmış rozet','pf2-5':'Kimlik + selfie doğrulama','pf2-6':'Alıcı ve satıcılara mesaj at','pf2-7':'Öne çıkan ilanlar',
+  'pf3-1':'Doğrulanmış\'taki her şey','pf3-2':'Sınırsız ilan','pf3-3':'Ayda 1 ücretsiz öne çıkan ilan',
+  'pf3-4':'Analitik dashboard','pf3-5':'Arama sonuçlarında öncelik','pf3-6':'Özelliklere erken erişim','pf3-7':'İstediğin zaman iptal et',
+  'ts1-title':'Güvenli ödeme','ts1-desc':'Stripe tarafından. Kart bilgilerini asla saklamıyoruz.',
+  'ts2-title':'Kimlik doğrulama dahil','ts2-desc':'Resmi kimlik + selfie eşleşmesi Stripe Identity ile.',
+  'ts3-title':'30 gün iade','ts3-desc':'Memnun kalmadın mı? 30 gün içinde tam iade.',
+  'ts4-title':'Gizli ücret yok','ts4-desc':'Gördüğün fiyat ödediğin fiyattır. Her zaman.',
+  'feat-title':'Öne çıkan ilan eklentisi','feat-desc':'Haritada altın pin + arama sonuçlarında üst sıra 7 gün.','feat-period':'ilan başına, 7 gün','feat-btn':'İlanımı öne çıkar',
+  'modal-verified-title':'Doğrulanmış Üye Ol','modal-verified-sub':'Bir kez öde, sonsuza kadar doğrulanmış. Kimlik doğrulama dahil.',
+  'modal-pro-title':'Pro Satıcı Ol','modal-pro-sub':'İstediğin zaman iptal et. Aylık faturalandırılır.',
+  'modal-featured-title':'İlanını öne çıkar','modal-featured-sub':'7 gün boyunca en üst sırada.',
+  'pay-btn-text':'Stripe ile güvenli öde →','security-note':'Ödemeniz Stripe tarafından işlenir. yAllsale kart bilgilerinizi asla görmez veya saklamaz.'
+},
+es:{
+  'hero-label':'Planes de membresía','hero-title':'Únete a la comunidad <span class="acc">verificada</span>',
+  'hero-sub':'Empieza gratis. Mejora cuando estés listo para comprar, vender y conectar con vecinos verificados.',
+  'vf-title':'Pasos de verificación — qué pasa después de unirte',
+  'vs1':'Teléfono','vs2':'Correo','vs3':'Plan verificado','vs4':'ID oficial','vs5':'Selfie','vs6':'¡Verificado!',
+  'p1-name':'Gratis','p1-period':'para siempre','p1-desc':'Explora ventas y descubre tu vecindario.',
+  'p2-name':'Miembro Verificado','p2-period':'pago único','p2-badge':'MÁS POPULAR',
+  'p2-desc':'El pago único incluye verificación de ID, sello verificado y acceso completo al marketplace.',
+  'p3-name':'Vendedor Pro','p3-period':'/mes','p3-badge':'PARA VENDEDORES',
+  'p3-desc':'Para vendedores serios. Anuncios ilimitados, prioridad destacada, analíticas.',
+  'p1-btn':'Explorar ventas gratis','p2-btn':'Verificarme — $2.99','p3-btn':'Ser Pro — $9.99/mes',
+  'pf1-1':'Ver ventas cercanas en mapa','pf1-2':'Ver listados de artículos','pf1-3':'Guardar ventas en favoritos',
+  'pf1-4':'Publicar anuncios','pf1-5':'Reservar artículos online','pf1-6':'Sello verificado','pf1-7':'Mensajear vendedores',
+  'pf2-1':'Todo en Gratis','pf2-2':'Publicar hasta 3 anuncios','pf2-3':'Reservar artículos online',
+  'pf2-4':'🛡️ Sello verificado en perfil','pf2-5':'Verificación ID + selfie','pf2-6':'Mensajear compradores y vendedores','pf2-7':'Anuncios destacados',
+  'pf3-1':'Todo en Verificado','pf3-2':'Anuncios ilimitados','pf3-3':'1 anuncio destacado gratis/mes',
+  'pf3-4':'Dashboard de analíticas','pf3-5':'Prioridad en resultados','pf3-6':'Acceso anticipado a funciones','pf3-7':'Cancela cuando quieras',
+  'ts1-title':'Pago seguro','ts1-desc':'Procesado por Stripe. Nunca almacenamos tus datos de tarjeta.',
+  'ts2-title':'Verificación de ID incluida','ts2-desc':'ID oficial + selfie procesados por Stripe Identity.',
+  'ts3-title':'Reembolso en 30 días','ts3-desc':'¿No estás satisfecho? Reembolso completo en 30 días.',
+  'ts4-title':'Sin cargos ocultos','ts4-desc':'El precio que ves es el que pagas. Siempre.',
+  'feat-title':'Anuncio destacado adicional','feat-desc':'Pin dorado en mapa + primero en resultados por 7 días.','feat-period':'por anuncio, 7 días','feat-btn':'Destacar mi venta',
+  'modal-verified-title':'Ser Miembro Verificado','modal-verified-sub':'Pago único, verificado para siempre. Incluye verificación de ID.',
+  'modal-pro-title':'Ser Vendedor Pro','modal-pro-sub':'Cancela cuando quieras. Facturado mensualmente.',
+  'modal-featured-title':'Destacar tu anuncio','modal-featured-sub':'7 días de posición principal.',
+  'pay-btn-text':'Pagar con Stripe →','security-note':'Tu pago es procesado por Stripe. yAllsale nunca ve ni almacena tus datos de tarjeta.'
+}
+};
+
+let lang = 'en';
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  const L = T[l];
+  Object.entries(L).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (String(val).includes('<')) el.innerHTML = val;
+    else el.textContent = val;
+  });
+}
+
+// ── CHECKOUT ──
+const PLAN_INFO = {
+  membership_verified: {
+    en: { title: 'Become a Verified Member', summary: '✓ ID verification (Gov. ID + selfie)\n✓ Verified badge on profile\n✓ Post up to 3 listings\n✓ Reserve items online\n✓ Message buyers & sellers', price: '$2.99 one-time' },
+    tr: { title: 'Doğrulanmış Üye Ol', summary: '✓ Kimlik doğrulama (Resmi kimlik + selfie)\n✓ Profilde doğrulanmış rozet\n✓ 3 adede kadar ilan ver\n✓ Online rezervasyon\n✓ Mesajlaşma', price: 'Tek seferlik $2.99' },
+    es: { title: 'Ser Miembro Verificado', summary: '✓ Verificación ID + selfie\n✓ Sello verificado en perfil\n✓ Hasta 3 anuncios\n✓ Reservar artículos\n✓ Mensajería', price: '$2.99 pago único' }
+  },
+  membership_pro: {
+    en: { title: 'Go Pro Seller', summary: '✓ Everything in Verified\n✓ Unlimited listings\n✓ 1 free featured listing/month\n✓ Analytics dashboard\n✓ Priority in search results\n✓ Cancel anytime', price: '$9.99/month' },
+    tr: { title: 'Pro Satıcı Ol', summary: '✓ Doğrulanmış\'taki her şey\n✓ Sınırsız ilan\n✓ Ayda 1 ücretsiz öne çıkan\n✓ Analitik dashboard\n✓ Arama önceliği\n✓ İstediğinde iptal', price: '$9.99/ay' },
+    es: { title: 'Ser Vendedor Pro', summary: '✓ Todo en Verificado\n✓ Anuncios ilimitados\n✓ 1 destacado gratis/mes\n✓ Analíticas\n✓ Prioridad en búsqueda\n✓ Cancela cuando quieras', price: '$9.99/mes' }
+  },
+  featured_listing: {
+    en: { title: 'Feature your listing', summary: '✓ Gold pin on the map\n✓ Top of search results\n✓ 7 days duration\n✓ Works on any active listing', price: '$3.00 per listing' },
+    tr: { title: 'İlanını öne çıkar', summary: '✓ Haritada altın pin\n✓ Arama sonuçlarında üst\n✓ 7 gün süre\n✓ Aktif herhangi bir ilan için', price: 'İlan başına $3.00' },
+    es: { title: 'Destacar tu anuncio', summary: '✓ Pin dorado en mapa\n✓ Primero en resultados\n✓ 7 días de duración\n✓ Funciona con cualquier anuncio activo', price: '$3.00 por anuncio' }
+  }
+};
+
+function startCheckout(type) {
+  currentCheckoutType = type;
+  const info = PLAN_INFO[type][lang];
+  document.getElementById('modal-title').textContent = info.title;
+  document.getElementById('modal-sub').textContent = type === 'membership_verified'
+    ? (lang === 'tr' ? 'Bir kez öde, sonsuza kadar doğrulanmış.' : lang === 'es' ? 'Pago único, verificado para siempre.' : 'Pay once, verified forever.')
+    : type === 'membership_pro'
+    ? (lang === 'tr' ? 'Aylık faturalandırılır. İstediğinde iptal.' : lang === 'es' ? 'Facturado mensualmente. Cancela cuando quieras.' : 'Billed monthly. Cancel anytime.')
+    : (lang === 'tr' ? '7 gün öne çıkan konum.' : lang === 'es' ? '7 días de posición destacada.' : '7 days of top placement.');
+  document.getElementById('modal-summary').innerHTML = info.summary.split('\n').map(l => `<div style="font-size:13px;color:var(--text2);padding:3px 0;display:flex;align-items:center;gap:7px"><span style="color:var(--g600)">${l.charAt(0) === '✓' ? '✓' : '✗'}</span><span>${l.slice(2)}</span></div>`).join('') + `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600">${lang === 'tr' ? 'Toplam' : lang === 'es' ? 'Total' : 'Total'}</span><span style="font-size:18px;font-weight:700;color:var(--g600);font-family:'Playfair Display',serif">${info.price}</span></div>`;
+  document.getElementById('modal-overlay') || document.querySelector('.modal-overlay');
+  document.getElementById('payment-modal').classList.add('show');
+}
+
+function closeModal() { document.getElementById('payment-modal').classList.remove('show'); }
+
+async function processPayment() {
+  if (isLoading) return;
+  isLoading = true;
+  const btn = document.getElementById('modal-pay-btn');
+  const btnText = document.getElementById('pay-btn-text');
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner"></span>' + (lang === 'tr' ? 'Yönlendiriliyor...' : lang === 'es' ? 'Redirigiendo...' : 'Redirecting to Stripe...');
+
+  try {
+    // Call Supabase Edge Function
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      },
+      body: JSON.stringify({
+        type: currentCheckoutType,
+        user_id: 'demo-user-id', // Replace with actual user ID from auth
+        sale_id: null
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      // Demo mode - simulate success
+      showToast(lang === 'tr' ? '✓ Demo: Ödeme simüle edildi!' : lang === 'es' ? '✓ Demo: ¡Pago simulado!' : '✓ Demo: Payment simulated!');
+      closeModal();
+      setTimeout(() => {
+        window.location.href = 'index.html?payment=success&type=' + currentCheckoutType;
+      }, 1500);
+    }
+  } catch (err) {
+    // Demo fallback
+    showToast(lang === 'tr' ? 'Demo modunda — gerçek ödeme için backend gerekli' : lang === 'es' ? 'Modo demo — se necesita backend para pago real' : 'Demo mode — backend needed for real payments');
+    closeModal();
+  } finally {
+    isLoading = false;
+    btn.disabled = false;
+    btnText.textContent = T[lang]['pay-btn-text'] || 'Pay securely with Stripe →';
+  }
+}
+
+function goToApp() { window.location.href = 'index.html'; }
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Close modal on overlay click
+document.getElementById('payment-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
