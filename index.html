@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<script>
+var ref=document.referrer;
+var ok=ref.indexOf('landing')!==-1||ref.indexOf('auth')!==-1||ref.indexOf('membership')!==-1||(ref.indexOf('yallsale.com')!==-1&&ref.indexOf('landing')===-1&&ref.indexOf('index')!==-1);
+if(!ok&&ref.indexOf('yallsale.com')===-1&&ref!==''){window.location.replace('landing.html');}
+else if(ref===''){window.location.replace('landing.html');}
+</script>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -186,7 +192,18 @@ textarea.form-input{resize:vertical;min-height:80px}
 .spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--g400);border-radius:50%;animation:spin 0.8s linear infinite;margin:20px auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:960px){.sidebar{width:60px}.logo-text,.nav-item span,.u-info,.post-btn span,.lang-bar{display:none}.nav-item{justify-content:center;padding:10px 0}.post-btn{padding:10px;gap:0}.user-strip{justify-content:center;padding:8px 0 0}.sidebar-logo{justify-content:center;padding:14px 0}.sale-panel{width:280px}.detail-side{width:250px}}
-@media(max-width:640px){.sidebar{display:none}.mobile-nav{display:flex}.sale-panel,.detail-side,.chips{display:none}}
+@media(max-width:640px){
+  .sidebar{display:none}
+  .mobile-nav{display:flex;flex-shrink:0}
+  .sale-panel,.detail-side,.chips{display:none}
+  .app{flex-direction:column}
+  .main{flex:1;min-height:0}
+  #map{flex:1;min-height:0}
+  .map-layout{flex:1;overflow:hidden}
+  .topbar{padding:8px 12px}
+  .search-bar{padding:7px 12px}
+  .map-count-badge{font-size:11px;padding:5px 12px;top:10px}
+}
 </style>
 </head>
 <body>
@@ -371,7 +388,8 @@ const DEMO=[
 
 mapboxgl.accessToken=MAPBOX_TOKEN;
 function initMap(){
-  map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/light-v11',center:[-71.0589,42.3601],zoom:12});
+  const isMobile=window.innerWidth<=640;
+  map=new mapboxgl.Map({container:"map",style:"mapbox://styles/mapbox/light-v11",center:[-71.0589,42.3601],zoom:isMobile?13:12});
   map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
   map.addControl(new mapboxgl.GeolocateControl({positionOptions:{enableHighAccuracy:true},trackUserLocation:true}),'bottom-right');
   map.on('load',()=>loadSales());
